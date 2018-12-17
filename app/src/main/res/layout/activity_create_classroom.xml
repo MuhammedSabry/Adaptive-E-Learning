@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@color/darkBlue"
+    android:animateLayoutChanges="true"
+    tools:context="com.eng.asu.adaptivelearning.view.activity.CreateClassroomActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/classroomNameTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:theme="@style/TextStyle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/classroomName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Classroom Name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/classroomCategoryTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:theme="@style/TextStyle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/classroomCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Classroom Category" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/createClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/buttonStyle"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="CREATE" />
+
+
+
+</LinearLayout>

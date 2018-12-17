@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">AdaptiveLearning</string>
+    <string name="password_text_abel">Password</string>
+    <string name="login_button_label">Login</string>
+    <string name="email_text_label">Email</string>
+    <string name="not_registered_text">Not registered?</string>
+    <string name="register_now_text">Register Now</string>
+    <string name="login_activity_label">Login</string>
+    <string name="login_successful_message">Login successful</string>
+    <string name="main_activity_label">Home</string>
+
+    <string-array name="type">
+        <item>Choose your type</item>
+        <item>Teacher</item>
+        <item>Student</item>
+        <item>Parent</item>
+    </string-array>
+</resources>

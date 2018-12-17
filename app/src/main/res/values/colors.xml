@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/mintGreen</color>
+    <color name="colorPrimaryDark">#82c982</color>
+    <color name="lightBlue">#2e3e50</color>
+    <color name="darkBlue">#212c39</color>
+    <color name="heavyBlue">#171f29</color>
+    <color name="colorAccent">@color/darkBlue</color>
+    <color name="mintGreen">#a0f7a0</color>
+    <color name="textColor">#0f430f</color>
+    <color name="whiteGray">#cecece</color>
+</resources>
