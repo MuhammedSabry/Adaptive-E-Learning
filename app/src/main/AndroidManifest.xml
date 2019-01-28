@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.eng.asu.adaptivelearning">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".LearningApplication"
         android:allowBackup="true"
@@ -16,11 +17,6 @@
         <activity
             android:name=".view.activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.LoginActivity"
@@ -29,7 +25,15 @@
             android:name=".view.activity.MainActivity"
             android:label="@string/main_activity_label" />
         <activity android:name=".view.activity.RegisterActivity" />
-        <activity android:name=".view.activity.CreateClassroomActivity"></activity>
+        <activity android:name=".view.activity.CreateClassroomActivity" />
+        <activity android:name=".view.activity.ParentActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.ChildInformations"></activity>
     </application>
 
 </manifest>

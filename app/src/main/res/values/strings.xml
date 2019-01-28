@@ -15,4 +15,26 @@
         <item>Student</item>
         <item>Parent</item>
     </string-array>
+
+    <string-array name="grade">
+        <item>Choose school grade</item>
+        <item>Pre-K/Kindergarten</item>
+        <item>1st grade</item>
+        <item>2nd grade</item>
+        <item>3rd grade</item>
+        <item>4th grade</item>
+        <item>5th grade</item>
+        <item>6th grade</item>
+        <item>7th grade</item>
+        <item>8th grade</item>
+        <item>High school and beyond</item>
+        <item>Other/Not applicable</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>Choose child gender</item>
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+
 </resources>
