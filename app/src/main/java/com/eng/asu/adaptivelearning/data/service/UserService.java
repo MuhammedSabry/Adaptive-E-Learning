@@ -7,7 +7,7 @@ import okhttp3.ResponseBody;
 
 public interface UserService {
 
-    Observable<ResponseBody> createUser(String email, String password, String name, int type);
+    Observable<ResponseBody> createUser(String email, String password, String name);
 
     Observable<User> login(String email, String password);
 

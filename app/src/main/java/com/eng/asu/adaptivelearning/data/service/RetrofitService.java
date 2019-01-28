@@ -16,8 +16,7 @@ public interface RetrofitService {
     Observable<ResponseBody> createUser(
             @Field("email") String email,
             @Field("password") String password,
-            @Field("name") String name,
-            @Field("type") int type);
+            @Field("name") String name);
 
     @GET("/api/auth/login")
     Observable<User> login(@Query("email") String email, @Query("password") String password);

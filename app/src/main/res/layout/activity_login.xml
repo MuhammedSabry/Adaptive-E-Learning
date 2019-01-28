@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:background="@color/darkBlue">
+        android:background="@color/background">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInput"
@@ -63,7 +63,6 @@
             android:id="@+id/button"
             style="@style/buttonStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
@@ -83,7 +82,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/not_registered_text"
-            android:textColor="@color/whiteGray"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/registerNowText"
             app:layout_constraintHorizontal_bias="0.5"
@@ -99,7 +99,8 @@
             android:layout_marginEnd="8dp"
             android:onClick="@{(view)->loginHandler.onRegisterClicked()}"
             android:text="@string/register_now_text"
-            android:textColor="@color/mintGreen"
+            android:textColor="@color/darkOrange"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/button"
             app:layout_constraintHorizontal_bias="0.5"
