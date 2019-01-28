@@ -97,8 +97,8 @@ public class UserViewModel extends AndroidViewModel {
         return backgrounds.get(new Random().nextInt(3));
     }
 
-    public Observable<ResponseBody> Register(String email, String password, String name, int type) {
-        return userService.createUser(email, password, name, type);
+    public Observable<ResponseBody> Register(String email, String password, String name) {
+        return userService.createUser(email, password, name);
     }
 
     public boolean allowCourseCreation() {

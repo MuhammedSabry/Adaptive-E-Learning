@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_vertical"
-    android:background="@color/darkBlue"
     android:animateLayoutChanges="true"
+    android:background="@color/background"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
     tools:context="com.eng.asu.adaptivelearning.view.activity.CreateClassroomActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -48,13 +47,10 @@
         android:id="@+id/createClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/buttonStyle"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="CREATE" />
-
-
-
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="CREATE"
+        android:theme="@style/buttonStyle" />
 </LinearLayout>

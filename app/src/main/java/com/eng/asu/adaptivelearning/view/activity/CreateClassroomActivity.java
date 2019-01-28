@@ -1,19 +1,20 @@
 package com.eng.asu.adaptivelearning.view.activity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.eng.asu.adaptivelearning.R;
-//import com.eng.asu.adaptivelearning.view.MainActivity;
 import com.eng.asu.adaptivelearning.viewmodel.UserViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import io.reactivex.observers.DefaultObserver;
 import okhttp3.ResponseBody;
+
+//import com.eng.asu.adaptivelearning.view.MainActivity;
 
 public class CreateClassroomActivity extends AppCompatActivity {
     EditText classroomName, classroomCategory;
@@ -26,14 +27,16 @@ public class CreateClassroomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_classroom);
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        classroomName = (EditText) findViewById(R.id.classroomName);
-        classroomCategory = (EditText) findViewById(R.id.classroomCategory);
-        createClass = (Button) findViewById(R.id.createClass);
+        classroomName = findViewById(R.id.classroomName);
+        classroomCategory = findViewById(R.id.classroomCategory);
+        createClass = findViewById(R.id.createClass);
         createClass.setOnClickListener(view -> createClassroom());
     }
 
     public void createClassroom(){
-        userViewModel.createClassroom(classroomName.getText().toString(), classroomCategory.getText().toString(),userViewModel.getUserId())
+        userViewModel.createClassroom(classroomName.getText().toString(),
+                classroomCategory.getText().toString(),
+                userViewModel.getUserId())
                 .subscribe(new DefaultObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {

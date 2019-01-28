@@ -5,11 +5,11 @@ import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.viewmodel.UserViewModel;
+import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,8 +20,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText name, email, password;
     Button signup;
-    Spinner type;
     UserViewModel userViewModel;
+    private TextInputLayout passwordLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +33,12 @@ public class RegisterActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        type = findViewById(R.id.type);
+        passwordLayout = findViewById(R.id.password_layout);
         signup = findViewById(R.id.signup);
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.spinner_item,
                 getResources().getStringArray(R.array.type));
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        type.setAdapter(spinnerAdapter);
 
         signup.setOnClickListener(view -> Register());
     }
@@ -50,15 +49,12 @@ public class RegisterActivity extends AppCompatActivity {
         else if (!userViewModel.isValidEmail(email.getText().toString()))
             email.setError("Email address invalid");
         else if (!userViewModel.isValidPassword(password.getText().toString()))
-            password.setError("Password is invalid");
-        else if (type.getSelectedItemPosition() < 1)
-            Toast.makeText(this, "Please choose your type", Toast.LENGTH_SHORT).show();
+            passwordLayout.setError("Password is invalid");
         else {
             signup.setEnabled(false);
             userViewModel.Register(email.getText().toString()
                     , password.getText().toString()
-                    , name.getText().toString()
-                    , type.getSelectedItemPosition())
+                    , name.getText().toString())
                     .subscribe(new DefaultObserver<ResponseBody>() {
                         @Override
                         public void onNext(ResponseBody responseBody) {

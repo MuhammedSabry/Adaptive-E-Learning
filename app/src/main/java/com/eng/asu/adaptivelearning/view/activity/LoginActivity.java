@@ -8,7 +8,7 @@ import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ActivityLoginBinding;
 import com.eng.asu.adaptivelearning.model.User;
 import com.eng.asu.adaptivelearning.viewmodel.UserViewModel;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,10 +37,12 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginButtonClicked() {
         String email = loginBinding.emailEditText.getText().toString();
         String password = loginBinding.passwordEditText.getText().toString();
+
         if (!userViewModel.isValidEmail(email))
-            invalidInput(loginBinding.emailEditText, "Email address invalid");
+            invalidInput(loginBinding.emailTextInput, "Email address invalid");
         else if (!userViewModel.isValidPassword(password))
-            invalidInput(loginBinding.passwordEditText, "Password is invalid");
+            invalidInput(loginBinding.passwordTextInput, "Password is invalid");
+
         else {
             userViewModel.login(email, password).subscribe(new DefaultObserver<User>() {
                 @Override
@@ -64,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void invalidInput(TextInputEditText editText, String errorMessage) {
+    private void invalidInput(TextInputLayout editText, String errorMessage) {
         editText.requestFocus();
         editText.setError(errorMessage);
     }

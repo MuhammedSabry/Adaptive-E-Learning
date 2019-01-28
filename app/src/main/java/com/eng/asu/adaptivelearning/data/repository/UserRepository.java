@@ -44,8 +44,8 @@ public class UserRepository implements UserService {
     }
 
     @Override
-    public Observable<ResponseBody> createUser(String email, String password, String name, int type) {
-        return serviceApi.createUser(email, password, name, type)
+    public Observable<ResponseBody> createUser(String email, String password, String name) {
+        return serviceApi.createUser(email, password, name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
