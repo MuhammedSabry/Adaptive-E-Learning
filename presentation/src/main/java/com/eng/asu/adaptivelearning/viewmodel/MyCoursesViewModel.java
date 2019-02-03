@@ -1,0 +1,11 @@
+package com.eng.asu.adaptivelearning.viewmodel;
+
+import javax.inject.Inject;
+
+import androidx.lifecycle.ViewModel;
+
+public class MyCoursesViewModel extends ViewModel {
+    @Inject
+    public MyCoursesViewModel() {
+    }
+}

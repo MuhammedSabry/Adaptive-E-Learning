@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_action"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/my_course_action"
+        android:icon="@drawable/ic_my_courses"
+        android:title="My courses" />
+
+    <item
+        android:id="@+id/parent_panel_action"
+        android:icon="@drawable/ic_parent_panel"
+        android:title="Parental control" />
+
+    <item
+        android:id="@+id/teacher_dashboard_action"
+        android:icon="@drawable/ic_dashboard"
+        android:title="Teacher Dashboard" />
+
+    <item
+        android:id="@+id/settings_action"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings" />
+
+    <item
+        android:id="@+id/about_action"
+        android:icon="@drawable/ic_about"
+        android:title="About" />
+</menu>
