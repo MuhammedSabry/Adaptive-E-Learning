@@ -68,12 +68,12 @@ public class LoginActivity extends AppCompatActivity implements LoginForm.Listen
 
     private void disableLogin() {
         loginBinding.loginButton.setEnabled(false);
-        loginBinding.progress.setVisibility(View.VISIBLE);
+        loginBinding.loadingScreen.setVisibility(View.VISIBLE);
     }
 
     private void enableLogin() {
         loginBinding.loginButton.setEnabled(true);
-        loginBinding.progress.setVisibility(View.GONE);
+        loginBinding.loadingScreen.setVisibility(View.INVISIBLE);
     }
 
     public void onRegisterClicked() {

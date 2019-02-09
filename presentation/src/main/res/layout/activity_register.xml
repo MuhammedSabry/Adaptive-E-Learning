@@ -199,20 +199,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pick_date" />
 
-            <ProgressBar
-                android:id="@+id/progress"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/loading_screen"
+                layout="@layout/loading_layout"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:elevation="2dp"
-                android:theme="@style/Base.Widget.AppCompat.ProgressBar"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/signup"
-                app:layout_constraintEnd_toEndOf="@id/signup"
-                app:layout_constraintTop_toTopOf="@+id/signup" />
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

@@ -1,5 +1,6 @@
 package com.eng.asu.adaptivelearning.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -25,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterForm.
     private ActivityRegisterBinding binding;
     private AlertDialog datePickerDialog;
     private DialogDatePickerBinding dialogBinding;
+    public static final String REGISTER_FOR_CHILD = "extra_is_add_child";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,22 @@ public class RegisterActivity extends AppCompatActivity implements RegisterForm.
         InputTextUtils.setErrorCanceller(binding.lastName);
         InputTextUtils.setErrorCanceller(binding.password);
         InputTextUtils.setErrorCanceller(binding.firstName);
+        if (viewModel.isForChild())
+            binding.signup.setText("Add child");
+        else
+            binding.signup.setText("Signup");
     }
 
     private void initViewModel() {
         viewModel = ViewModelProviders
                 .of(this, LearningApplication.getViewModelFactory())
                 .get(RegisterViewModel.class);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null && !extras.isEmpty()) {
+            boolean isForChild = extras.getBoolean(REGISTER_FOR_CHILD,false);
+            viewModel.setIsForChild(isForChild);
+        }
     }
 
     private void initDataBinding() {
@@ -74,12 +86,12 @@ public class RegisterActivity extends AppCompatActivity implements RegisterForm.
 
     private void disableRegistering() {
         binding.signup.setEnabled(false);
-        binding.progress.setVisibility(View.VISIBLE);
+        binding.loadingScreen.setVisibility(View.VISIBLE);
     }
 
     private void enableRegistering() {
         binding.signup.setEnabled(true);
-        binding.progress.setVisibility(View.GONE);
+        binding.loadingScreen.setVisibility(View.INVISIBLE);
     }
 
     public void onDatePicked() {
@@ -145,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterForm.
     @Override
     public void onSuccess(String message) {
         Toasty.success(this, message, Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(this::finish, 1000);
+        finish();
     }
 
     @Override

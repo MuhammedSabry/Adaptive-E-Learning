@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -54,9 +55,9 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<Boolean> createUser(String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth) {
+    public Completable createUser(String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth) {
         return serviceApi.register(firstName, lastName, email, userName, password, gender, dateOfBirth)
-                .map(this::responseMapper);
+                .flatMapCompletable(this::completableSourceMapper);
     }
 
     @Override
@@ -70,9 +71,24 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
+    public Completable addChild(String token, String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth) {
+        return serviceApi.addChild(token, firstName, lastName, email, userName, password, gender, dateOfBirth)
+                .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
     public Observable<Boolean> createClassroom(String token, String name, String category, int type) {
         return serviceApi.createClassroom(token, name, category, type)
                 .map(this::responseMapper);
+    }
+
+    private Completable completableSourceMapper(Response<ResponseBody> response) {
+        try {
+            responseMapper(response);
+            return Completable.complete();
+        } catch (Exception e) {
+            return Completable.error(e);
+        }
     }
 
     private boolean responseMapper(Response<ResponseBody> response) throws IOException {

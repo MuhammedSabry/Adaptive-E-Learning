@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 public class ParentalControlViewModel extends ViewModel {
 
     @Inject
-    public ParentalControlViewModel() {
+    ParentalControlViewModel() {
         super();
     }
 }

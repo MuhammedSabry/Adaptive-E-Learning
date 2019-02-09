@@ -14,7 +14,7 @@ public abstract class SingleUseCase<R, Q> extends UseCase<Single, Q> {
                 .observeOn(getPostExecutionThread());
     }
 
-    public Single<R> execute() {
+    protected Single<R> execute() {
         return execute(null);
     }
 

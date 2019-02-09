@@ -53,7 +53,7 @@ public class ChildInformations extends AppCompatActivity {
             Toast.makeText(this, "Please choose child's gender", Toast.LENGTH_SHORT).show();
         else{
             //TODO -save childUserName.getText().toString() && childPassword.getText().toString() && schoolGrade/childGender.getSelectedItem().toString();
-            startActivity(new Intent(this, ParentActivity.class));
+//            startActivity(new Intent(this, ParentActivity.class));
         }
 
     }
