@@ -76,4 +76,11 @@ public interface RetrofitService {
                                                        @Field(Param.CLASSROOM_NAME) String name,
                                                        @Field(Param.CATEGORY) String category);
 
+    //Student APIs
+    @FormUrlEncoded
+    @POST(Mapping.ENROLL_COURSE)
+    Observable<Response<ResponseBody>> enrollInCourse(@Field(Param.ACCESS_TOKEN) String token, @Field(Param.COURSE_ID) int courseId);
+
+    @GET(Mapping.STUDENT_COURSES)
+    Observable<List<Course>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);
 }

@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -77,11 +76,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void initViews() {
-        newCoursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList());
+        newCoursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList(), viewModel);
         binding.newCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         binding.newCoursesList.setAdapter(newCoursesAdapter);
 
-        hotCoursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList());
+        hotCoursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList(), viewModel);
         binding.hotCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         binding.hotCoursesList.setAdapter(hotCoursesAdapter);
 

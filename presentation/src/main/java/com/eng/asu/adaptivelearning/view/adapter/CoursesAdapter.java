@@ -1,27 +1,34 @@
 package com.eng.asu.adaptivelearning.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ItemviewCourseBinding;
 import com.eng.asu.adaptivelearning.domain.model.Course;
+import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
 
 import java.util.List;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
+import es.dmoral.toasty.Toasty;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder> {
 
     private Context context;
     private List<Course> courses;
+    private HomeViewModel homeViewModel;
 
-    public CoursesAdapter(Context context, List<Course> courses) {
+    public CoursesAdapter(Context context, List<Course> courses, HomeViewModel viewModel) {
         this.context = context;
         this.courses = courses;
+        this.homeViewModel = viewModel;
     }
 
     public void setCourses(List<Course> courses) {
@@ -61,7 +68,37 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             binding.courseName.setText(course.getTitle());
             binding.courseInstructor.setText(course.getPublisher().getFirstName());
             binding.courseInstructor.setText(course.getDetailedTitle());
-            binding.courseBackground.setImageDrawable(context.getResources().getDrawable(course.getBackground()));
+            if (course.getBackground() != 0) {
+                binding.courseBackground.setImageDrawable(context.getResources().getDrawable(course.getBackground()));
+            } else {
+                int[] backgroundList = new int[]{R.drawable.bg1, R.drawable.bg2, R.drawable.bg3};
+                binding.courseBackground.setImageDrawable(context.getResources().getDrawable(backgroundList[new Random().nextInt(3)]));
+            }
+            if (homeViewModel == null) {
+                binding.enrollButton.setVisibility(View.GONE);
+            } else {
+
+                binding.enrollButton.setVisibility(View.VISIBLE);
+                binding.enrollButton.setOnClickListener(v -> enrollInCourse(course));
+            }
+        }
+
+        @SuppressWarnings("ResultOfMethodCallIgnored")
+        @SuppressLint("CheckResult")
+        private void enrollInCourse(Course course) {
+            binding.enrollButton.setEnabled(false);
+            homeViewModel.enrollInCourse(course.getCourseId())
+                    .subscribe(this::onEnrollSuccess, this::onEnrollError);
+        }
+
+        private void onEnrollError(Throwable throwable) {
+            binding.enrollButton.setEnabled(true);
+            Toasty.error(context, throwable.getMessage()).show();
+        }
+
+        private void onEnrollSuccess() {
+            binding.enrollButton.setEnabled(true);
+            Toasty.success(context, "Enrolled Successfully").show();
         }
     }
 }

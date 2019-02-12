@@ -77,6 +77,17 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
+    public Completable enrollInCourse(String token, int courseId) {
+        return serviceApi.enrollInCourse(token, courseId)
+                .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Observable<List<Course>> getStudentCourses(String token) {
+        return serviceApi.getStudentCourses(token);
+    }
+
+    @Override
     public Observable<List<User>> getChildren(String token) {
         return serviceApi.getChildren(token);
     }

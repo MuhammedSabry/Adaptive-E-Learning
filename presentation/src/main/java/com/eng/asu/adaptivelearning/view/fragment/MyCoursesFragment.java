@@ -50,7 +50,7 @@ public class MyCoursesFragment extends Fragment {
     }
 
     private void initViews() {
-        coursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList());
+        coursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList(), null);
         binding.coursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         binding.coursesList.setAdapter(coursesAdapter);
     }
