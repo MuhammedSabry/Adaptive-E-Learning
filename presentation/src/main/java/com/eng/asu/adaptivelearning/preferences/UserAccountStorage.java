@@ -16,14 +16,14 @@ public class UserAccountStorage {
     @Inject
     UserAccountStorage(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        this.userPreference = new ObjectPreference<>(sharedPreferences, "pref_user", new User(), User.class);
+        userPreference = new ObjectPreference<>(sharedPreferences, "pref_user", new User(), User.class);
     }
 
-    public User getUser() {
+    private User getUser() {
         return userPreference.get();
     }
 
-    public void setUser(User user) {
+    private void setUser(User user) {
         userPreference.set(user);
     }
 
@@ -33,11 +33,11 @@ public class UserAccountStorage {
 
     public String getAuthToken() {
         final User user = getUser();
-        return user != null ? user.getToken() : null;
+        return user.getToken();
     }
 
     public void setAuthToken(String token) {
-        final User user = getUser();
+        User user = getUser();
         user.setToken(token);
         setUser(user);
     }

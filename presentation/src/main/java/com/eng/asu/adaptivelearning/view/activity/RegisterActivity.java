@@ -2,7 +2,6 @@ package com.eng.asu.adaptivelearning.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -85,13 +84,14 @@ public class RegisterActivity extends AppCompatActivity implements RegisterForm.
     }
 
     private void disableRegistering() {
+        InputTextUtils.hideSoftKeyboard(this);
         binding.signup.setEnabled(false);
         binding.loadingScreen.setVisibility(View.VISIBLE);
     }
 
     private void enableRegistering() {
         binding.signup.setEnabled(true);
-        binding.loadingScreen.setVisibility(View.INVISIBLE);
+        binding.loadingScreen.setVisibility(View.GONE);
     }
 
     public void onDatePicked() {

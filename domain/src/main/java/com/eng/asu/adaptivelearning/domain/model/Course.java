@@ -3,6 +3,8 @@ package com.eng.asu.adaptivelearning.domain.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.DrawableRes;
+
 public class Course {
 
     private int courseId;
@@ -27,6 +29,9 @@ public class Course {
 
     private List<Section> sections;
 
+    @DrawableRes
+    private int background;
+
     public Course() {
     }
 
@@ -40,6 +45,14 @@ public class Course {
         this.description = description;
         this.isPublic = isPublic;
         this.level = level;
+    }
+
+    public int getBackground() {
+        return background;
+    }
+
+    public void setBackground(int background) {
+        this.background = background;
     }
 
     public int getCourseId() {

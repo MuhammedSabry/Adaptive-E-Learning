@@ -3,7 +3,6 @@ package com.eng.asu.adaptivelearning.viewmodel;
 import android.util.Log;
 
 import com.eng.asu.adaptivelearning.domain.interactor.LoginInteractor;
-import com.eng.asu.adaptivelearning.domain.model.User;
 import com.eng.asu.adaptivelearning.model.form.LoginForm;
 import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
 
@@ -71,9 +70,9 @@ public class LoginViewModel extends ViewModel {
         return emailOrUsername.contains("@") && !isValidEmail(emailOrUsername);
     }
 
-    private void onLoginSuccess(User user) {
-        userAccountStorage.setUser(user);
-        Log.i(TAG, "Login successful with user " + user);
+    private void onLoginSuccess(String token) {
+        userAccountStorage.setAuthToken(token);
+        Log.i(TAG, "Login successful with token " + token);
     }
 
     private void onLoginError(Throwable throwable) {

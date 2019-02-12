@@ -24,12 +24,17 @@ public class SplashActivity extends AppCompatActivity {
                 .of(this, LearningApplication.getViewModelFactory())
                 .get(SplashViewModel.class);
 
-        new Handler().postDelayed(this::splashScreenFinished, 2000);
+        new Handler().postDelayed(this::splashScreenFinished, 1000);
     }
 
     private void splashScreenFinished() {
-        startActivity(new Intent(this, splashViewModel.getActivityToOpen()));
+        splashViewModel.getActivityToOpen().observe(this, this::onActivityToOpenRetrieved);
+    }
+
+    private void onActivityToOpenRetrieved(Class<? extends AppCompatActivity> activityToOpen) {
+        startActivity(new Intent(this, activityToOpen));
         finish();
+
     }
 
 }

@@ -17,7 +17,7 @@
 
         <activity
             android:name=".view.activity.SplashActivity"
-            android:theme="@style/AppThem.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,15 +27,18 @@
 
         <activity
             android:name=".view.activity.LoginActivity"
-            android:label="@string/login_activity_label" />
+            android:label="@string/login_activity_label"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".view.activity.MainActivity"
-            android:label="@string/main_activity_label"></activity>
+            android:label="@string/main_activity_label"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".view.activity.RegisterActivity"
-            android:label="@string/register_activity_label" />
+            android:label="@string/register_activity_label"
+            android:theme="@style/AppTheme" />
 
         <activity android:name=".view.activity.CreateClassroomActivity" />
 

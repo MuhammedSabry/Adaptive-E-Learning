@@ -4,6 +4,7 @@ import com.eng.asu.adaptivelearning.viewmodel.AboutViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.CreateClassroomViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.LoginViewModel;
+import com.eng.asu.adaptivelearning.viewmodel.MainViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.MyCoursesViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.ParentalControlViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.RegisterViewModel;
@@ -34,6 +35,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SplashViewModel.class)
     abstract ViewModel provideSplashViewModel(SplashViewModel splashViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel.class)
+    abstract ViewModel provideMainViewModel(MainViewModel mainViewModel);
 
     @Binds
     @IntoMap

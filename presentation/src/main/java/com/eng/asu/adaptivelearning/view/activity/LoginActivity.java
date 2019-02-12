@@ -9,6 +9,7 @@ import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ActivityLoginBinding;
 import com.eng.asu.adaptivelearning.model.form.LoginForm;
+import com.eng.asu.adaptivelearning.util.InputTextUtils;
 import com.eng.asu.adaptivelearning.viewmodel.LoginViewModel;
 
 import androidx.annotation.Nullable;
@@ -67,13 +68,14 @@ public class LoginActivity extends AppCompatActivity implements LoginForm.Listen
     }
 
     private void disableLogin() {
+        InputTextUtils.hideSoftKeyboard(this);
         loginBinding.loginButton.setEnabled(false);
         loginBinding.loadingScreen.setVisibility(View.VISIBLE);
     }
 
     private void enableLogin() {
         loginBinding.loginButton.setEnabled(true);
-        loginBinding.loadingScreen.setVisibility(View.INVISIBLE);
+        loginBinding.loadingScreen.setVisibility(View.GONE);
     }
 
     public void onRegisterClicked() {

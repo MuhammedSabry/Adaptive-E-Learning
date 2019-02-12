@@ -4,21 +4,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
+import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ActivityMainBinding;
 import com.eng.asu.adaptivelearning.view.adapter.MainPagerAdapter;
+import com.eng.asu.adaptivelearning.viewmodel.MainViewModel;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mainBinding;
     private MainPagerAdapter mainPagerAdapter;
+    private TextView userName;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,8 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeActivity() {
         initDataBinding();
+        initViewModel();
         setupToolBar();
         initViews();
+        subscribeToUserData();
+    }
+
+    private void initViewModel() {
+        mainViewModel = ViewModelProviders.of(this, LearningApplication.getViewModelFactory()).get(MainViewModel.class);
+    }
+
+    private void subscribeToUserData() {
+        mainViewModel.getUserData().observe(this, user -> userName.setText(user.getUsername()));
     }
 
     private void initViews() {
@@ -39,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         mainBinding.navView.setNavigationItemSelectedListener(this::onDrawerItemClicked);
         mainBinding.navView.getMenu().getItem(0).setChecked(true);
+
+        View headerView = mainBinding.navView.getHeaderView(0);
+        userName = headerView.findViewById(R.id.user_name);
     }
 
     private void initDataBinding() {

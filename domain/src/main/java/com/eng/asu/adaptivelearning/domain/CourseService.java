@@ -4,9 +4,10 @@ import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public interface CourseService {
+    Observable<List<Course>> getHotCourses();
 
-    Flowable<List<Course>> getAllCourses();
+    Observable<List<Course>> getNewCourses();
 }

@@ -10,73 +10,89 @@
             type="com.eng.asu.adaptivelearning.view.fragment.HomeFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/new_courses_label"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="NEW courses"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@color/white">
 
-        <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
-            android:id="@+id/new_courses_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_courses_label"
-            tools:listitem="@layout/itemview_course" />
+            <TextView
+                android:id="@+id/new_courses_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="NEW courses"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/your_children_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="HOT Courses"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_courses_list" />
+            <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
+                android:id="@+id/new_courses_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_15"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/new_courses_label"
+                tools:listitem="@layout/itemview_course" />
 
-        <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
-            android:id="@+id/hot_courses_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/your_children_label"
-            tools:listitem="@layout/itemview_course" />
+            <TextView
+                android:id="@+id/your_children_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="HOT Courses"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/new_courses_list" />
 
-        <include
-            android:id="@+id/loading_screen"
-            layout="@layout/loading_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
+                android:id="@+id/hot_courses_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_15"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/your_children_label"
+                tools:listitem="@layout/itemview_course" />
 
-        <include
-            android:id="@+id/empty_screen"
-            layout="@layout/empty_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/loading_screen"
+                layout="@layout/loading_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/empty_screen"
+                layout="@layout/empty_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

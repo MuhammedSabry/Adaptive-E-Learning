@@ -2,6 +2,9 @@ package com.eng.asu.adaptivelearning.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,6 +27,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeFragment extends Fragment {
     private HomeViewModel viewModel;
     private FragmentHomeBinding binding;
+    private CoursesAdapter newCoursesAdapter;
+    private CoursesAdapter hotCoursesAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
@@ -34,18 +45,46 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.home_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.refresh_action) {
+            subscribeToData();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = ViewModelProviders.of(this, LearningApplication.getViewModelFactory()).get(HomeViewModel.class);
+        initViewModel();
         initViews();
+        subscribeToData();
+    }
+
+    private void subscribeToData() {
+        viewModel.getNewCourses().observe(this, newCoursesAdapter::setCourses);
+        viewModel.getHotCourses().observe(this, hotCoursesAdapter::setCourses);
+    }
+
+    private void initViewModel() {
+        viewModel = ViewModelProviders.of(this, LearningApplication.getViewModelFactory()).get(HomeViewModel.class);
     }
 
     private void initViews() {
-        binding.newCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
-        binding.newCoursesList.setAdapter(new CoursesAdapter(getContext(), Collections.emptyList()));
-        binding.hotCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
-        binding.hotCoursesList.setAdapter(new CoursesAdapter(getContext(), Collections.emptyList()));
-    }
+        newCoursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList());
+        binding.newCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.newCoursesList.setAdapter(newCoursesAdapter);
 
+        hotCoursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList());
+        binding.hotCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.hotCoursesList.setAdapter(hotCoursesAdapter);
+
+    }
 
 }

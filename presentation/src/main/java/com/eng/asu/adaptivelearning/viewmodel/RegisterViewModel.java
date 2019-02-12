@@ -57,16 +57,16 @@ public class RegisterViewModel extends ViewModel {
             listener.onFirstNameError("Invalid first name");
 
         if (!isValidLastName)
-            listener.onLastNameError("Invalid first name");
+            listener.onLastNameError("Invalid Last name");
 
         if (!isValidEmail)
-            listener.onEmailError("Invalid first name");
+            listener.onEmailError("Invalid email address");
 
         if (!isValidPassword)
             listener.onPasswordError("Invalid password");
 
         if (!isValidUsername)
-            listener.onUsernameError("Invalid password");
+            listener.onUsernameError("Invalid username");
 
         if (!isValidDate)
             listener.onDateOfBirthError("Please pick a birth date");

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -61,13 +60,25 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<User> loginWithEmail(String email, String password) {
-        return serviceApi.loginByEmail(email, password);
+    public Observable<String> loginWithEmail(String email, String password) {
+        return serviceApi.loginByEmail(email, password)
+                .map(this::stringResponseMapper);
     }
 
     @Override
-    public Observable<User> loginWithUserName(String userName, String password) {
-        return serviceApi.loginByUsername(userName, password);
+    public Observable<String> loginWithUserName(String userName, String password) {
+        return serviceApi.loginByUsername(userName, password)
+                .map(this::stringResponseMapper);
+    }
+
+    @Override
+    public Observable<User> getUserProfile(String token) {
+        return serviceApi.getUserData(token);
+    }
+
+    @Override
+    public Observable<List<User>> getChildren(String token) {
+        return serviceApi.getChildren(token);
     }
 
     @Override
@@ -77,8 +88,18 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<Boolean> createClassroom(String token, String name, String category, int type) {
-        return serviceApi.createClassroom(token, name, category, type)
+    public Observable<List<Course>> getHotCourses() {
+        return serviceApi.getHotCourses();
+    }
+
+    @Override
+    public Observable<List<Course>> getNewCourses() {
+        return serviceApi.getNewCourses();
+    }
+
+    @Override
+    public Observable<Boolean> createClassroom(String token, String name, String category) {
+        return serviceApi.createClassroom(token, name, category)
                 .map(this::responseMapper);
     }
 
@@ -88,6 +109,21 @@ public class NetworkRepository implements UserService,
             return Completable.complete();
         } catch (Exception e) {
             return Completable.error(e);
+        }
+    }
+
+    private String stringResponseMapper(Response<ResponseBody> response) throws IOException {
+
+        //If response code is 200 and it contains a body
+        if (response.isSuccessful() && response.body() != null)
+            return response.body().string();
+        else {
+            if (response.errorBody() != null)
+                throw new RuntimeException(response.errorBody().string());
+            else if (response.body() != null)
+                throw new RuntimeException(response.body().string());
+            else
+                throw new HttpException(response);
         }
     }
 
@@ -105,12 +141,6 @@ public class NetworkRepository implements UserService,
     }
 
     private boolean isSuccessful(Response response) {
-        return response.code() == 200;
-    }
-
-    @Override
-    public Flowable<List<Course>> getAllCourses() {
-        //TODO get all courses
-        return Flowable.never();
+        return response.isSuccessful();
     }
 }

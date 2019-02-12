@@ -61,6 +61,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             binding.courseName.setText(course.getTitle());
             binding.courseInstructor.setText(course.getPublisher().getFirstName());
             binding.courseInstructor.setText(course.getDetailedTitle());
+            binding.courseBackground.setImageDrawable(context.getResources().getDrawable(course.getBackground()));
         }
     }
 }

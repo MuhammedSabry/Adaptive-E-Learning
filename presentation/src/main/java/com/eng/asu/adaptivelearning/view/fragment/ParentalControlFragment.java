@@ -28,6 +28,7 @@ public class ParentalControlFragment extends Fragment {
     private ParentalControlViewModel viewModel;
     private FragmentParentalControlBinding binding;
     private Context context;
+    private ChildAdapter childrenAdapter;
 
     public ParentalControlFragment() {
     }
@@ -55,6 +56,11 @@ public class ParentalControlFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViewModel();
         initViews();
+        subscribeToChildren();
+    }
+
+    private void subscribeToChildren() {
+        viewModel.getChildren().observe(this, childrenAdapter::setChildren);
     }
 
     private void initViewModel() {
@@ -63,8 +69,9 @@ public class ParentalControlFragment extends Fragment {
     }
 
     private void initViews() {
+        childrenAdapter = new ChildAdapter(context, Collections.emptyList());
         binding.childrenList.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        binding.childrenList.setAdapter(new ChildAdapter(context, Collections.emptyList()));
+        binding.childrenList.setAdapter(childrenAdapter);
         binding.childrenList.setEmptyView(binding.emptyScreen);
     }
 

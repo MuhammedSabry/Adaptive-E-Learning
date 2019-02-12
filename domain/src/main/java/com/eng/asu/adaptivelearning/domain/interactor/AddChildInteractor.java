@@ -21,7 +21,7 @@ public class AddChildInteractor extends CompletableUseCase<Void> {
     private String token;
 
     @Inject
-    protected AddChildInteractor(BackgroundExecutionThread backgroundExecutionThread, PostExecutionThread postExecutionThread, UserService userService) {
+    AddChildInteractor(BackgroundExecutionThread backgroundExecutionThread, PostExecutionThread postExecutionThread, UserService userService) {
         super(backgroundExecutionThread, postExecutionThread);
         this.userService = userService;
     }

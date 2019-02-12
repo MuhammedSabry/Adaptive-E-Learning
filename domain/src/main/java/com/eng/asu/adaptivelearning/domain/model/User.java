@@ -1,63 +1,26 @@
 package com.eng.asu.adaptivelearning.domain.model;
 
-import java.util.Date;
-import java.util.List;
-
 public class User {
 
     private int userId;
-
     private String firstName;
-
     private String lastName;
-
     private String email;
-
     private String username;
-
-    private String password;
-
-    private Date dateOfBirth;
-
+    private String dateOfBirth;
+    private short age;
     private String token;
-
-    private short gender;
-
+    private String gender;
     private String grade;
-
-    private List<User> children;
-
-    private User parent;
-
-    private List<Classroom> classrooms;
-
-    private List<Course> courses;
-
-    private List<Classroom> joins;
-
-    private List<Course> enrolls;
+    private boolean isTeacher = false;
+    private boolean isChild = false;
+    private boolean isParent = false;
 
     public User() {
     }
 
-    public User(String firstName,
-                String lastName,
-                String email,
-                String username,
-                String password,
-                Date dateOfBirth,
-                short gender) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-    }
-
     public int getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public void setUserId(int userId) {
@@ -65,7 +28,7 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -73,7 +36,7 @@ public class User {
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
@@ -81,7 +44,7 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -89,78 +52,74 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
-    public void setUsername(String userName) {
-        this.username = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getDateOfBirth() {
+        return this.dateOfBirth;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public short getAge() {
+        return this.age;
+    }
+
+    public void setAge(short age) {
+        this.age = age;
+    }
+
     public String getToken() {
-        return token;
+        return this.token;
     }
 
     public void setToken(String token) {
         this.token = token;
     }
 
-    public short getGender() {
-        return gender;
+    public String getGender() {
+        return this.gender;
     }
 
-    public void setGender(short gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
     public String getGrade() {
-        return grade;
+        return this.grade;
     }
 
     public void setGrade(String grade) {
         this.grade = grade;
     }
 
-    public List<User> getChildren() {
-        return children;
+    public boolean isTeacher() {
+        return this.isTeacher;
     }
 
-    public List<Classroom> getClassrooms() {
-        return classrooms;
+    public void setTeacher(boolean teacher) {
+        this.isTeacher = teacher;
     }
 
-    public List<Classroom> getJoins() {
-        return joins;
+    public boolean isChild() {
+        return this.isChild;
     }
 
-    public User getParent() {
-        return parent;
+    public void setChild(boolean child) {
+        this.isChild = child;
     }
 
-    public void setParent(User parent) {
-        this.parent = parent;
+    public boolean isParent() {
+        return this.isParent;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public List<Course> getEnrolls() {
-        return enrolls;
+    public void setParent(boolean parent) {
+        this.isParent = parent;
     }
 }
