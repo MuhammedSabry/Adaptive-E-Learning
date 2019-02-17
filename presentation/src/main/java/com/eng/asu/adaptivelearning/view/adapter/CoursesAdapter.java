@@ -1,6 +1,5 @@
 package com.eng.asu.adaptivelearning.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ItemviewCourseBinding;
 import com.eng.asu.adaptivelearning.domain.model.Course;
+import com.eng.asu.adaptivelearning.model.BaseListener;
 import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
 
 import java.util.List;
@@ -83,22 +83,33 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             }
         }
 
-        @SuppressWarnings("ResultOfMethodCallIgnored")
-        @SuppressLint("CheckResult")
         private void enrollInCourse(Course course) {
             binding.enrollButton.setEnabled(false);
-            homeViewModel.enrollInCourse(course.getCourseId())
-                    .subscribe(this::onEnrollSuccess, this::onEnrollError);
+            homeViewModel.enrollInCourse(course.getCourseId(), new BaseListener() {
+                @Override
+                public void onSuccess(String message) {
+                    onEnrollSuccess(message);
+                }
+
+                @Override
+                public void onFail(String message) {
+                    onEnrollError(message);
+                }
+
+                @Override
+                public void onFallBack() {
+                }
+            });
         }
 
-        private void onEnrollError(Throwable throwable) {
+        private void onEnrollError(String message) {
             binding.enrollButton.setEnabled(true);
-            Toasty.error(context, throwable.getMessage()).show();
+            Toasty.error(context, message).show();
         }
 
-        private void onEnrollSuccess() {
+        private void onEnrollSuccess(String message) {
             binding.enrollButton.setEnabled(true);
-            Toasty.success(context, "Enrolled Successfully").show();
+            Toasty.success(context, message).show();
         }
     }
 }

@@ -37,10 +37,6 @@ public interface RetrofitService {
     Observable<Response<ResponseBody>> loginByUsername(@Query(Param.USERNAME) String email,
                                                        @Query(Param.PASSWORD) String password);
 
-    @FormUrlEncoded
-    @POST(Mapping.LOGOUT)
-    Observable<Response<ResponseBody>> logout(@Field(Param.ACCESS_TOKEN) String token);
-
     //User profile
     @GET(Mapping.PROFILE)
     Observable<User> getUserData(@Query(Param.ACCESS_TOKEN) String token);
@@ -79,7 +75,8 @@ public interface RetrofitService {
     //Student APIs
     @FormUrlEncoded
     @POST(Mapping.ENROLL_COURSE)
-    Observable<Response<ResponseBody>> enrollInCourse(@Field(Param.ACCESS_TOKEN) String token, @Field(Param.COURSE_ID) int courseId);
+    Observable<Response<ResponseBody>> enrollInCourse(@Field(Param.ACCESS_TOKEN) String token,
+                                                      @Field(Param.COURSE_ID) int courseId);
 
     @GET(Mapping.STUDENT_COURSES)
     Observable<List<Course>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);

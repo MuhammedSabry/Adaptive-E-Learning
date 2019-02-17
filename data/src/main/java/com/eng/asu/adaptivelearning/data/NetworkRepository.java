@@ -38,10 +38,10 @@ public class NetworkRepository implements UserService,
         httpClient.addInterceptor(logging);
         httpClient.networkInterceptors().add(new StethoInterceptor());
 
-        //1 Minute timeout for reading , writing and connection establishing
-        httpClient.connectTimeout(1, TimeUnit.MINUTES);
-        httpClient.readTimeout(1, TimeUnit.MINUTES);
-        httpClient.writeTimeout(1, TimeUnit.MINUTES);
+        //10 Seconds timeout for reading , writing and connection establishing
+        httpClient.connectTimeout(10, TimeUnit.SECONDS);
+        httpClient.readTimeout(10, TimeUnit.SECONDS);
+        httpClient.writeTimeout(10, TimeUnit.SECONDS);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
