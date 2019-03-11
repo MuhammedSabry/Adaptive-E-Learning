@@ -27,7 +27,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('C:\\Users\\Muhammed\\StudioProjects\\Adaptive-E-Learning\\libs\\server.jar')
     implementation project(':domain')
+
+    /* Dagger 2 core */
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     /* Retrofit */
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'

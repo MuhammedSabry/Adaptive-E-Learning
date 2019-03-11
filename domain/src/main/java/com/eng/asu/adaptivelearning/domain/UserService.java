@@ -1,7 +1,7 @@
 package com.eng.asu.adaptivelearning.domain;
 
-import com.eng.asu.adaptivelearning.domain.model.Course;
-import com.eng.asu.adaptivelearning.domain.model.User;
+import com.adaptivelearning.server.FancyModel.FancyCourse;
+import com.adaptivelearning.server.FancyModel.FancyUser;
 
 import java.util.List;
 
@@ -22,14 +22,14 @@ public interface UserService {
 
     Observable<String> loginWithUserName(String userName, String password);
 
-    Observable<User> getUserProfile(String token);
+    Observable<FancyUser> getUserProfile();
 
-    Completable enrollInCourse(String token, int courseId);
+    Completable enrollInCourse(long courseId);
 
-    Observable<List<Course>> getStudentCourses(String token);
+    Observable<List<FancyCourse>> getStudentCourses();
 
-    Observable<List<User>> getChildren(String token);
+    Observable<List<FancyUser>> getChildren();
 
-    Completable addChild(String token, String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth);
+    Completable addChild(String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth);
 
 }

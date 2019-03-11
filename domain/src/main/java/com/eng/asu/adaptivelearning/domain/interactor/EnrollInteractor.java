@@ -9,11 +9,9 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 
-public class EnrollInteractor extends CompletableUseCase<Void> {
+public class EnrollInteractor extends CompletableUseCase<Long> {
 
     private final UserService userService;
-    private String token;
-    private int courseId;
 
     @Inject
     EnrollInteractor(BackgroundExecutionThread backgroundExecutionThread, PostExecutionThread postExecutionThread, UserService userService) {
@@ -21,15 +19,8 @@ public class EnrollInteractor extends CompletableUseCase<Void> {
         this.userService = userService;
     }
 
-    public Completable execute(String token,
-                               int courseId) {
-        this.token = token;
-        this.courseId = courseId;
-        return super.execute();
-    }
-
     @Override
-    protected Completable interact(Void param) {
-        return userService.enrollInCourse(token, courseId);
+    protected Completable interact(Long courseId) {
+        return userService.enrollInCourse(courseId);
     }
 }

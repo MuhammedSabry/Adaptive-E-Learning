@@ -4,42 +4,53 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.eng.asu.adaptivelearning.domain.model.User;
+import com.adaptivelearning.server.FancyModel.FancyUser;
+import com.eng.asu.adaptivelearning.domain.UserStorage;
 import com.eng.asu.adaptivelearning.preferences.base.ObjectPreference;
+import com.eng.asu.adaptivelearning.preferences.base.StringPreference;
 
 import javax.inject.Inject;
 
-public class UserAccountStorage {
+public class UserAccountStorage implements UserStorage {
 
-    private final ObjectPreference<User> userPreference;
+    private final ObjectPreference<FancyUser> userPreference;
+    private final StringPreference tokenPreference;
 
     @Inject
     UserAccountStorage(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        userPreference = new ObjectPreference<>(sharedPreferences, "pref_user", new User(), User.class);
+        userPreference = new ObjectPreference<>(sharedPreferences, "pref_user", new FancyUser(), FancyUser.class);
+        tokenPreference = new StringPreference(sharedPreferences, "pref_token");
     }
 
-    private User getUser() {
+    @Override
+    public FancyUser getUser() {
         return userPreference.get();
     }
 
-    private void setUser(User user) {
+    @Override
+    public void setUser(FancyUser user) {
         userPreference.set(user);
     }
 
+    @Override
     public void removeUser() {
         userPreference.delete();
     }
 
+    @Override
     public String getAuthToken() {
-        final User user = getUser();
-        return user.getToken();
+        return tokenPreference.get();
     }
 
+    @Override
     public void setAuthToken(String token) {
-        User user = getUser();
-        user.setToken(token);
-        setUser(user);
+        tokenPreference.set(token);
+    }
+
+    @Override
+    public void removeToken() {
+        tokenPreference.delete();
     }
 
 }

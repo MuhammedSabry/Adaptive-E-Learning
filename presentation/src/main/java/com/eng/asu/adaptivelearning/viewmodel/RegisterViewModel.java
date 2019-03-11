@@ -6,7 +6,6 @@ import android.util.Log;
 import com.eng.asu.adaptivelearning.domain.interactor.AddChildInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.RegisterInteractor;
 import com.eng.asu.adaptivelearning.model.form.RegisterForm;
-import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
 
 import javax.inject.Inject;
 
@@ -23,17 +22,15 @@ public class RegisterViewModel extends ViewModel {
 
     private final RegisterInteractor registerInteractor;
     private final AddChildInteractor addChildInteractor;
-    private final UserAccountStorage userAccountStorage;
 
     private Disposable registerDisposable;
     private boolean isForChild = false;
 
     @Inject
-    RegisterViewModel(RegisterInteractor registerInteractor, AddChildInteractor addChildInteractor, UserAccountStorage userAccountStorage) {
+    RegisterViewModel(RegisterInteractor registerInteractor, AddChildInteractor addChildInteractor) {
         super();
         this.registerInteractor = registerInteractor;
         this.addChildInteractor = addChildInteractor;
-        this.userAccountStorage = userAccountStorage;
     }
 
     public void register(RegisterForm registerForm, RegisterForm.Listener listener) {
@@ -88,14 +85,7 @@ public class RegisterViewModel extends ViewModel {
     }
 
     private void registerForChild(RegisterForm.Listener listener, String firstName, String lastName, String email1, String userName, String password, String dateOfBirth, int gender) {
-        registerDisposable = addChildInteractor.execute(userAccountStorage.getAuthToken(),
-                firstName,
-                lastName,
-                email1,
-                userName,
-                password,
-                gender,
-                dateOfBirth)
+        registerDisposable = addChildInteractor.execute(firstName, lastName, email1, userName, password, gender, dateOfBirth)
                 .subscribe(() -> {
                     onRegisterSuccess();
                     if (isForChild)

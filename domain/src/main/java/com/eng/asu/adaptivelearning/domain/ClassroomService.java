@@ -4,6 +4,6 @@ import io.reactivex.Observable;
 
 public interface ClassroomService {
 
-    Observable<Boolean> createClassroom(String token, String name, String category);
+    Observable<Boolean> createClassroom(String name, String category);
 
 }

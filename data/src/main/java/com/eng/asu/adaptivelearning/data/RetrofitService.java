@@ -1,15 +1,21 @@
 package com.eng.asu.adaptivelearning.data;
 
+import com.adaptivelearning.server.FancyModel.FancyCategory;
+import com.adaptivelearning.server.FancyModel.FancyCourse;
+import com.adaptivelearning.server.FancyModel.FancyLecture;
+import com.adaptivelearning.server.FancyModel.FancyQuestion;
+import com.adaptivelearning.server.FancyModel.FancyQuiz;
+import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.adaptivelearning.server.constants.Mapping;
 import com.adaptivelearning.server.constants.Param;
-import com.eng.asu.adaptivelearning.domain.model.Course;
-import com.eng.asu.adaptivelearning.domain.model.User;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -37,19 +43,41 @@ public interface RetrofitService {
     Observable<Response<ResponseBody>> loginByUsername(@Query(Param.USERNAME) String email,
                                                        @Query(Param.PASSWORD) String password);
 
-    //User profile
+    //User
     @GET(Mapping.PROFILE)
-    Observable<User> getUserData(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<FancyUser> getUserData(@Query(Param.ACCESS_TOKEN) String token);
+
+    @FormUrlEncoded
+    @POST(Mapping.SAVED_COURSES)
+    Observable<Response<ResponseBody>> saveCourse(@Query(Param.COURSE_ID) int courseId);
+
+    @DELETE(Mapping.SAVED_COURSES)
+    Observable<Response<ResponseBody>> removeSavedCourse(@Query(Param.COURSE_ID) int courseId);
+
+    @GET(Mapping.SAVED_COURSES)
+    Observable<List<FancyCourse>> getSavedCourses();
+
+    @GET(Mapping.COURSE)
+    Observable<List<FancyCourse>> getCourse(@Query(Param.COURSE_ID) int courseId);
 
     //General APIs
     @GET(Mapping.NEW_COURSES)
-    Observable<List<Course>> getNewCourses();
+    Observable<List<FancyCourse>> getNewCourses();
 
     @GET(Mapping.HOT_COURSES)
-    Observable<List<Course>> getHotCourses();
+    Observable<List<FancyCourse>> getHotCourses();
+
+    @GET(Mapping.TOP_RATED_COURSES)
+    Observable<List<FancyCourse>> getTopRatedCourses();
 
     @GET(Mapping.CATEGORY_COURSES)
-    Observable<List<Course>> getCoursesByCategory(@Query(Param.CATEGORY) String category);
+    Observable<List<FancyCourse>> getCoursesByCategory(@Query(Param.CATEGORY_ID) long categoryId);
+
+    @GET(Mapping.CATEGORY_COURSES)
+    Observable<List<FancyCourse>> getCoursesByCategory(@Query(Param.CATEGORY) String category);
+
+    @GET(Mapping.CATEGORIES)
+    Observable<List<FancyCategory>> getCategories();
 
     //Parent APIs
     @FormUrlEncoded
@@ -64,7 +92,7 @@ public interface RetrofitService {
                                                 @Field(Param.DATE_OF_BIRTH) String dateOfBirth);
 
     @GET(Mapping.CHILDREN)
-    Observable<List<User>> getChildren(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<List<FancyUser>> getChildren(@Query(Param.ACCESS_TOKEN) String token);
 
     @FormUrlEncoded
     @POST("createClassroom")
@@ -76,8 +104,22 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST(Mapping.ENROLL_COURSE)
     Observable<Response<ResponseBody>> enrollInCourse(@Field(Param.ACCESS_TOKEN) String token,
-                                                      @Field(Param.COURSE_ID) int courseId);
+                                                      @Field(Param.COURSE_ID) long courseId);
 
     @GET(Mapping.STUDENT_COURSES)
-    Observable<List<Course>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<List<FancyCourse>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);
+
+    @GET(Mapping.QUIZ)
+    Observable<FancyQuiz> getQuiz(@Query(Param.QUIZ_ID) long quizId);
+
+    @GET(Mapping.STUDENT_START_QUIZ)
+    Observable<FancyQuiz> startQuiz(@Query(Param.QUIZ_ID) long quizId);
+
+    @GET(Mapping.STUDENT_SUBMIT_QUIZ)
+    Observable<FancyQuiz> submitQuiz(@Query(Param.QUIZ_ID) long quizId,
+                                     @Body List<FancyQuestion> answers);
+
+    @GET(Mapping.LECTURE)
+    Observable<FancyLecture> getLecture(@Query(Param.LECTURE_ID) long lectureId);
+
 }

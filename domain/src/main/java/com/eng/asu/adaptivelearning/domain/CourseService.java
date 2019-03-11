@@ -1,13 +1,13 @@
 package com.eng.asu.adaptivelearning.domain;
 
-import com.eng.asu.adaptivelearning.domain.model.Course;
+import com.adaptivelearning.server.FancyModel.FancyCourse;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 
 public interface CourseService {
-    Observable<List<Course>> getHotCourses();
+    Observable<List<FancyCourse>> getHotCourses();
 
-    Observable<List<Course>> getNewCourses();
+    Observable<List<FancyCourse>> getNewCourses();
 }

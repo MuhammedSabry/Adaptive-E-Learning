@@ -1,15 +1,18 @@
 package com.eng.asu.adaptivelearning.data;
 
+import com.adaptivelearning.server.FancyModel.FancyCourse;
+import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
 import com.eng.asu.adaptivelearning.domain.UserService;
-import com.eng.asu.adaptivelearning.domain.model.Course;
-import com.eng.asu.adaptivelearning.domain.model.User;
+import com.eng.asu.adaptivelearning.domain.UserStorage;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -28,8 +31,11 @@ public class NetworkRepository implements UserService,
 
     private static final String BASE_URL = "https://graduation-server.herokuapp.com/";
     private final RetrofitService serviceApi;
+    private String authToken;
 
-    public NetworkRepository() {
+    @Inject
+    NetworkRepository(UserStorage userStorage) {
+        this.authToken = userStorage.getAuthToken();
 
         //Configuring the logcat to display request/response parameters
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -72,45 +78,45 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<User> getUserProfile(String token) {
-        return serviceApi.getUserData(token);
+    public Observable<FancyUser> getUserProfile() {
+        return serviceApi.getUserData(authToken);
     }
 
     @Override
-    public Completable enrollInCourse(String token, int courseId) {
-        return serviceApi.enrollInCourse(token, courseId)
+    public Completable enrollInCourse(long courseId) {
+        return serviceApi.enrollInCourse(authToken, courseId)
                 .flatMapCompletable(this::completableSourceMapper);
     }
 
     @Override
-    public Observable<List<Course>> getStudentCourses(String token) {
-        return serviceApi.getStudentCourses(token);
+    public Observable<List<FancyCourse>> getStudentCourses() {
+        return serviceApi.getStudentCourses(authToken);
     }
 
     @Override
-    public Observable<List<User>> getChildren(String token) {
-        return serviceApi.getChildren(token);
+    public Observable<List<FancyUser>> getChildren() {
+        return serviceApi.getChildren(authToken);
     }
 
     @Override
-    public Completable addChild(String token, String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth) {
-        return serviceApi.addChild(token, firstName, lastName, email, userName, password, gender, dateOfBirth)
+    public Completable addChild(String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth) {
+        return serviceApi.addChild(authToken, firstName, lastName, email, userName, password, gender, dateOfBirth)
                 .flatMapCompletable(this::completableSourceMapper);
     }
 
     @Override
-    public Observable<List<Course>> getHotCourses() {
+    public Observable<List<FancyCourse>> getHotCourses() {
         return serviceApi.getHotCourses();
     }
 
     @Override
-    public Observable<List<Course>> getNewCourses() {
+    public Observable<List<FancyCourse>> getNewCourses() {
         return serviceApi.getNewCourses();
     }
 
     @Override
-    public Observable<Boolean> createClassroom(String token, String name, String category) {
-        return serviceApi.createClassroom(token, name, category)
+    public Observable<Boolean> createClassroom(String name, String category) {
+        return serviceApi.createClassroom(authToken, name, category)
                 .map(this::responseMapper);
     }
 

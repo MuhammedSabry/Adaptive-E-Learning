@@ -18,7 +18,6 @@ public class AddChildInteractor extends CompletableUseCase<Void> {
     private String password;
     private int gender;
     private String dateOfBirth;
-    private String token;
 
     @Inject
     AddChildInteractor(BackgroundExecutionThread backgroundExecutionThread, PostExecutionThread postExecutionThread, UserService userService) {
@@ -26,15 +25,13 @@ public class AddChildInteractor extends CompletableUseCase<Void> {
         this.userService = userService;
     }
 
-    public Completable execute(String token,
-                               String firstName,
+    public Completable execute(String firstName,
                                String lastName,
                                String email,
                                String userName,
                                String password,
                                int gender,
                                String dateOfBirth) {
-        this.token = token;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -47,7 +44,7 @@ public class AddChildInteractor extends CompletableUseCase<Void> {
 
     @Override
     protected Completable interact(Void param) {
-        return userService.addChild(token, firstName, lastName, email, userName, password, gender, dateOfBirth);
+        return userService.addChild(firstName, lastName, email, userName, password, gender, dateOfBirth);
     }
 
 }

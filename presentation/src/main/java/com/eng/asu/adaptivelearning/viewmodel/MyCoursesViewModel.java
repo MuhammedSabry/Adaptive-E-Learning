@@ -1,8 +1,7 @@
 package com.eng.asu.adaptivelearning.viewmodel;
 
+import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.domain.interactor.GetEnrolledCourses;
-import com.eng.asu.adaptivelearning.domain.model.Course;
-import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,20 +15,18 @@ import io.reactivex.Flowable;
 
 public class MyCoursesViewModel extends ViewModel {
 
-    private final UserAccountStorage userAccountStorage;
     private final GetEnrolledCourses getEnrolledCourses;
 
     @Inject
-    MyCoursesViewModel(UserAccountStorage userAccountStorage, GetEnrolledCourses getEnrolledCourses) {
+    MyCoursesViewModel(GetEnrolledCourses getEnrolledCourses) {
         super();
-        this.userAccountStorage = userAccountStorage;
         this.getEnrolledCourses = getEnrolledCourses;
     }
 
-    public LiveData<List<Course>> getUserCourses() {
+    public LiveData<List<FancyCourse>> getUserCourses() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(10, TimeUnit.SECONDS)
-                        .flatMap(aLong -> getEnrolledCourses.execute(userAccountStorage.getAuthToken())));
+                        .flatMap(aLong -> getEnrolledCourses.execute()));
     }
 
 }

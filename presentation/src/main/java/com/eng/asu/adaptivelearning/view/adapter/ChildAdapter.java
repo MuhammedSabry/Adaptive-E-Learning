@@ -4,9 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ItemviewChildBinding;
-import com.eng.asu.adaptivelearning.domain.model.User;
 
 import java.util.List;
 
@@ -17,14 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHolder> {
 
     private Context context;
-    private List<User> children;
+    private List<FancyUser> children;
 
-    public ChildAdapter(Context context, List<User> children) {
+    public ChildAdapter(Context context, List<FancyUser> children) {
         this.context = context;
         this.children = children;
     }
 
-    public void setChildren(List<User> children) {
+    public void setChildren(List<FancyUser> children) {
         this.children = children;
         notifyDataSetChanged();
     }
@@ -54,7 +54,7 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
             this.binding = childBinding;
         }
 
-        void bind(User child) {
+        void bind(FancyUser child) {
             binding.name.setText(child.getFirstName() + " " + child.getLastName());
             binding.username.setText(child.getUsername());
         }

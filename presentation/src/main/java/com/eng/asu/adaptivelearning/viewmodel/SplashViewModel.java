@@ -1,9 +1,7 @@
 package com.eng.asu.adaptivelearning.viewmodel;
 
-import android.text.TextUtils;
-
+import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.interactor.UserProfileInteractor;
-import com.eng.asu.adaptivelearning.domain.model.User;
 import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
 import com.eng.asu.adaptivelearning.view.activity.LoginActivity;
 import com.eng.asu.adaptivelearning.view.activity.MainActivity;
@@ -28,13 +26,13 @@ public class SplashViewModel extends ViewModel {
     }
 
     public LiveData<Class<? extends AppCompatActivity>> getActivityToOpen() {
-        return LiveDataReactiveStreams.fromPublisher(userProfileInteractor.execute(userAccountStorage.getAuthToken())
-                .onErrorReturnItem(new User())
-                .map(User::getToken)
-                .onErrorReturnItem("")
-                .map(token -> {
-                    if (TextUtils.isEmpty(token)) {
+        FancyUser defaultErrorValue = new FancyUser();
+        return LiveDataReactiveStreams.fromPublisher(userProfileInteractor.execute()
+                .onErrorReturnItem(defaultErrorValue)
+                .map(user -> {
+                    if (defaultErrorValue == user) {
                         userAccountStorage.removeUser();
+                        userAccountStorage.removeToken();
                         return LoginActivity.class;
                     }
                     return MainActivity.class;

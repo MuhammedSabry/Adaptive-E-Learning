@@ -7,10 +7,12 @@ import com.eng.asu.adaptivelearning.data.NetworkRepository;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
 import com.eng.asu.adaptivelearning.domain.UserService;
+import com.eng.asu.adaptivelearning.domain.UserStorage;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.BackgroundExecutionThread;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.PostExecutionThread;
 import com.eng.asu.adaptivelearning.executor.BackgroundThreadExecutor;
 import com.eng.asu.adaptivelearning.executor.MainThreadExecutor;
+import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
 
 import javax.inject.Singleton;
 
@@ -46,19 +48,25 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    UserService getUserService() {
-        return new NetworkRepository();
+    UserService getUserService(NetworkRepository networkRepository) {
+        return networkRepository;
     }
 
     @Provides
     @Singleton
-    ClassroomService getClassroomService() {
-        return new NetworkRepository();
+    ClassroomService getClassroomService(NetworkRepository networkRepository) {
+        return networkRepository;
     }
 
     @Provides
     @Singleton
-    CourseService getCourseService() {
-        return new NetworkRepository();
+    CourseService getCourseService(NetworkRepository networkRepository) {
+        return networkRepository;
+    }
+
+    @Provides
+    @Singleton
+    UserStorage getUserStorage(UserAccountStorage userAccountStorage) {
+        return userAccountStorage;
     }
 }
