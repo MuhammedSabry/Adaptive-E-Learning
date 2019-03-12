@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.FragmentMyCoursesBinding;
+import com.eng.asu.adaptivelearning.view.adapter.ClassAdapter;
 import com.eng.asu.adaptivelearning.view.adapter.CoursesAdapter;
+import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.MyCoursesViewModel;
 
 import java.util.Collections;
@@ -25,6 +27,7 @@ public class MyCoursesFragment extends Fragment {
     private MyCoursesViewModel viewModel;
     private FragmentMyCoursesBinding binding;
     private CoursesAdapter coursesAdapter;
+    private ClassAdapter classAdapter;
 
     public MyCoursesFragment() {
     }
@@ -47,11 +50,15 @@ public class MyCoursesFragment extends Fragment {
 
     private void subscribe() {
         viewModel.getUserCourses().observe(this, coursesAdapter::setCourses);
+        viewModel.getStudentClassrooms().observe(this, classAdapter::setClasses);
     }
 
     private void initViews() {
-        coursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList(), null);
+        coursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList(), (HomeViewModel) null);
         binding.coursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         binding.coursesList.setAdapter(coursesAdapter);
+        classAdapter = new ClassAdapter(getContext(), Collections.emptyList());
+//        binding.classesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+//        binding.classesList.setAdapter(classAdapter);
     }
 }

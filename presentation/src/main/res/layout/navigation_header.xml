@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     android:background="@color/gray"
     android:gravity="center"
     android:orientation="vertical"
@@ -22,4 +22,13 @@
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         tools:text="Muhammed Sabry" />
+
+    <TextView
+        android:id="@+id/viewProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Profile"
+        android:textSize="15sp"
+        tools:text="View Profile"
+        android:onClick="viewProfile"/>
 </LinearLayout>

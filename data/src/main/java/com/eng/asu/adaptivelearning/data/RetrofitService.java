@@ -1,6 +1,7 @@
 package com.eng.asu.adaptivelearning.data;
 
 import com.adaptivelearning.server.FancyModel.FancyCategory;
+import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyLecture;
 import com.adaptivelearning.server.FancyModel.FancyQuestion;
@@ -47,18 +48,19 @@ public interface RetrofitService {
     @GET(Mapping.PROFILE)
     Observable<FancyUser> getUserData(@Query(Param.ACCESS_TOKEN) String token);
 
-    @FormUrlEncoded
-    @POST(Mapping.SAVED_COURSES)
-    Observable<Response<ResponseBody>> saveCourse(@Query(Param.COURSE_ID) int courseId);
+//    @FormUrlEncoded
+//    @POST(Mapping.SAVED_COURSES)
+//    Observable<Response<ResponseBody>> saveCourse(@Query(Param.COURSE_ID) int courseId);
 
     @DELETE(Mapping.SAVED_COURSES)
     Observable<Response<ResponseBody>> removeSavedCourse(@Query(Param.COURSE_ID) int courseId);
 
     @GET(Mapping.SAVED_COURSES)
-    Observable<List<FancyCourse>> getSavedCourses();
+    Observable<List<FancyCourse>> getSavedCourses(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.COURSE)
-    Observable<List<FancyCourse>> getCourse(@Query(Param.COURSE_ID) int courseId);
+    Observable<FancyCourse> getCourse(@Query(Param.ACCESS_TOKEN) String token,
+                                      @Query(Param.COURSE_ID) Integer courseId);
 
     //General APIs
     @GET(Mapping.NEW_COURSES)
@@ -106,8 +108,23 @@ public interface RetrofitService {
     Observable<Response<ResponseBody>> enrollInCourse(@Field(Param.ACCESS_TOKEN) String token,
                                                       @Field(Param.COURSE_ID) long courseId);
 
+    @FormUrlEncoded
+    @POST(Mapping.SAVED_COURSES)
+    Observable<Response<ResponseBody>> saveCourse(@Field(Param.ACCESS_TOKEN) String token,
+                                                      @Field(Param.COURSE_ID) long courseId);
+
+
     @GET(Mapping.STUDENT_COURSES)
     Observable<List<FancyCourse>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);
+
+    @GET(Mapping.TEACHER_COURSES)
+    Observable<List<FancyCourse>> getTeacherCourses(@Query(Param.ACCESS_TOKEN) String token);
+
+    @GET(Mapping.TEACHER_CLASSROOM)
+    Observable<List<FancyClassroom>> getTeacherClassrooms(@Query(Param.ACCESS_TOKEN) String token);
+
+    @GET(Mapping.STUDENT_CLASSROOMS)
+    Observable<List<FancyClassroom>> getStudentClassrooms(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.QUIZ)
     Observable<FancyQuiz> getQuiz(@Query(Param.QUIZ_ID) long quizId);

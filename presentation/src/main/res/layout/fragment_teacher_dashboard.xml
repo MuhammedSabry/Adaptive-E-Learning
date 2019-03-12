@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -8,10 +10,34 @@
             type="com.eng.asu.adaptivelearning.view.fragment.TeacherDashboardFragment" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="match_parent">
 
-    </LinearLayout>
+        <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
+            android:id="@+id/courses_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clipToPadding="false"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/itemview_course" />
+
+        <!--<com.eng.asu.adaptivelearning.view.custom.CustomRecycler-->
+            <!--android:id="@+id/classes_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/white"-->
+            <!--android:clipToPadding="false"-->
+            <!--android:padding="4dp"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/courses_list"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--tools:listitem="@layout/itemview_classroom" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

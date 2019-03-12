@@ -1,17 +1,22 @@
 package com.eng.asu.adaptivelearning.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ItemviewCourseBinding;
 import com.eng.asu.adaptivelearning.model.BaseListener;
+import com.eng.asu.adaptivelearning.view.activity.CourseInfo;
 import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
+import com.eng.asu.adaptivelearning.viewmodel.SavedCoursesViewModel;
 
 import java.util.List;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -23,11 +28,18 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
     private Context context;
     private List<FancyCourse> courses;
     private HomeViewModel homeViewModel;
+    private SavedCoursesViewModel savedCoursesViewModel;
 
     public CoursesAdapter(Context context, List<FancyCourse> courses, HomeViewModel viewModel) {
         this.context = context;
         this.courses = courses;
         this.homeViewModel = viewModel;
+    }
+
+    public CoursesAdapter(Context context, List<FancyCourse> courses, SavedCoursesViewModel savedCoursesViewModel) {
+        this.context = context;
+        this.courses = courses;
+        this.savedCoursesViewModel = savedCoursesViewModel;
     }
 
     public void setCourses(List<FancyCourse> courses) {
@@ -55,12 +67,26 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
         return courses.size();
     }
 
-    class CoursesViewHolder extends RecyclerView.ViewHolder {
+    class CoursesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ItemviewCourseBinding binding;
 
         CoursesViewHolder(@NonNull ItemviewCourseBinding binding) {
             super(binding.parent);
             this.binding = binding;
+            binding.courseBackground.setOnClickListener(this);
+            binding.courseName.setOnClickListener(this);
+            binding.bookmark.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+            if(view == binding.courseBackground || view == binding.courseName) {
+                Intent intent = new Intent(context, CourseInfo.class);
+                intent.putExtra("itemClicked", courses.get(this.getAdapterPosition()).getCourseId());
+                context.startActivity(intent);
+            }
+            else if(view == binding.bookmark){
+                saveCourse(courses.get(this.getAdapterPosition()).getCourseId());
+            }
         }
 
         void bind(FancyCourse course) {
@@ -76,6 +102,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             if (homeViewModel == null) {
                 binding.enrollButton.setVisibility(View.GONE);
             } else {
+
                 binding.enrollButton.setVisibility(View.VISIBLE);
                 binding.enrollButton.setOnClickListener(v -> enrollInCourse(course));
             }
@@ -100,6 +127,25 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             });
         }
 
+        private void saveCourse(long courseId){
+            homeViewModel.saveCourse(courseId, new BaseListener() {
+                @Override
+                public void onSuccess(String message) {
+                    Toasty.success(context, message).show();
+                }
+
+                @Override
+                public void onFail(String message) {
+                    Toasty.error(context, message).show();
+                }
+
+                @Override
+                public void onFallBack() {
+
+                }
+            });
+        }
+
         private void onEnrollError(String message) {
             binding.enrollButton.setEnabled(true);
             Toasty.error(context, message).show();
@@ -109,5 +155,6 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             binding.enrollButton.setEnabled(true);
             Toasty.success(context, message).show();
         }
+
     }
 }

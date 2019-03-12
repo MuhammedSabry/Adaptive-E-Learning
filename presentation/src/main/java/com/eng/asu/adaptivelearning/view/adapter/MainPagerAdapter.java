@@ -4,6 +4,7 @@ import com.eng.asu.adaptivelearning.view.fragment.AboutFragment;
 import com.eng.asu.adaptivelearning.view.fragment.HomeFragment;
 import com.eng.asu.adaptivelearning.view.fragment.MyCoursesFragment;
 import com.eng.asu.adaptivelearning.view.fragment.ParentalControlFragment;
+import com.eng.asu.adaptivelearning.view.fragment.SavedCoursesFragment;
 import com.eng.asu.adaptivelearning.view.fragment.SettingsFragment;
 import com.eng.asu.adaptivelearning.view.fragment.TeacherDashboardFragment;
 
@@ -32,8 +33,10 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             case 4:
                 return new TeacherDashboardFragment();
             case 5:
-                return new SettingsFragment();
+                return new SavedCoursesFragment();
             case 6:
+                return new SettingsFragment();
+            case 7:
                 return new AboutFragment();
             default:
                 return new HomeFragment();
@@ -53,8 +56,10 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             case 4:
                 return "Dashboard";
             case 5:
-                return "Settings";
+                return "Saved Courses";
             case 6:
+                return "Settings";
+            case 7:
                 return "About";
             default:
                 return "Home";
@@ -63,6 +68,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        return 7;
     }
 }

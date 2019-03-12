@@ -10,7 +10,7 @@ import io.reactivex.FlowableTransformer;
  *
  * @author Muhammed Sabry
  */
-public abstract class FlowableUseCase<R, Q> extends UseCase<Flowable, Q> {
+public abstract class FlowableUseCase<R, Q> extends UseCase<Flowable, Q>{
 
     private final FlowableTransformer<? super R, ? extends R> schedulersTransformer;
 

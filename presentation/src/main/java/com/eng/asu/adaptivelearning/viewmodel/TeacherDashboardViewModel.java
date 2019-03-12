@@ -1,12 +1,44 @@
 package com.eng.asu.adaptivelearning.viewmodel;
 
+import com.adaptivelearning.server.FancyModel.FancyClassroom;
+import com.adaptivelearning.server.FancyModel.FancyCourse;
+import com.eng.asu.adaptivelearning.domain.interactor.GetEnrolledCourses;
+import com.eng.asu.adaptivelearning.domain.interactor.GetTeacherClassrooms;
+import com.eng.asu.adaptivelearning.domain.interactor.GetTeacherCourses;
+import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
+import io.reactivex.Flowable;
 
 public class TeacherDashboardViewModel extends ViewModel {
+
+    private final GetTeacherCourses getTeacherCourses;
+    private final GetTeacherClassrooms getTeacherClassrooms;
+
     @Inject
-    TeacherDashboardViewModel() {
+    TeacherDashboardViewModel(GetTeacherCourses getTeacherCourses,
+                              GetTeacherClassrooms getTeacherClassrooms) {
         super();
+        this.getTeacherCourses = getTeacherCourses;
+        this.getTeacherClassrooms = getTeacherClassrooms;
+    }
+
+    public LiveData<List<FancyCourse>> getTeacherCourses() {
+        return LiveDataReactiveStreams.fromPublisher(
+                Flowable.interval(10, TimeUnit.SECONDS)
+                        .flatMap(aLong -> getTeacherCourses.execute()));
+    }
+
+    public LiveData<List<FancyClassroom>> getTeacherClassrooms() {
+        return LiveDataReactiveStreams.fromPublisher(
+                Flowable.interval(10, TimeUnit.SECONDS)
+                        .flatMap(aLong -> getTeacherClassrooms.execute()));
     }
 }

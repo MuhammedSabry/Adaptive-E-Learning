@@ -1,5 +1,6 @@
 package com.eng.asu.adaptivelearning.data;
 
+import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
@@ -89,6 +90,17 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
+    public Completable saveCourse(long courseId) {
+        return serviceApi.saveCourse(authToken, courseId)
+                .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Observable<List<FancyCourse>> getSavedCourses() {
+        return serviceApi.getSavedCourses(authToken);
+    }
+
+    @Override
     public Observable<List<FancyCourse>> getStudentCourses() {
         return serviceApi.getStudentCourses(authToken);
     }
@@ -99,9 +111,24 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
+    public Observable<List<FancyCourse>> getTeacherCourses() {
+        return serviceApi.getTeacherCourses(authToken);
+    }
+
+    @Override
     public Completable addChild(String firstName, String lastName, String email, String userName, String password, int gender, String dateOfBirth) {
         return serviceApi.addChild(authToken, firstName, lastName, email, userName, password, gender, dateOfBirth)
                 .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Observable<List<FancyClassroom>> getTeacherClassrooms() {
+        return serviceApi.getTeacherClassrooms(authToken);
+    }
+
+    @Override
+    public Observable<List<FancyClassroom>> getStudentClassrooms() {
+        return serviceApi.getStudentClassrooms(authToken);
     }
 
     @Override
@@ -112,6 +139,16 @@ public class NetworkRepository implements UserService,
     @Override
     public Observable<List<FancyCourse>> getNewCourses() {
         return serviceApi.getNewCourses();
+    }
+
+    @Override
+    public Observable<List<FancyCourse>> getCoursesByCategory(String category) {
+        return serviceApi.getCoursesByCategory(category);
+    }
+
+    @Override
+    public Observable<FancyCourse> getCourse(Integer courseId) {
+        return serviceApi.getCourse(authToken, courseId);
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.eng.asu.adaptivelearning.view.adapter.CoursesAdapter;
 import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
 
 import java.util.Collections;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -85,5 +86,6 @@ public class HomeFragment extends Fragment {
         binding.hotCoursesList.setAdapter(hotCoursesAdapter);
 
     }
+
 
 }

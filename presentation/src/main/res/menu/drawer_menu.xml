@@ -22,6 +22,11 @@
         android:title="Teacher Dashboard" />
 
     <item
+        android:id="@+id/saved_courses_action"
+        android:icon="@drawable/ic_save_black_24dp"
+        android:title="Saved Courses" />
+
+    <item
         android:id="@+id/settings_action"
         android:icon="@drawable/ic_settings"
         android:title="Settings" />

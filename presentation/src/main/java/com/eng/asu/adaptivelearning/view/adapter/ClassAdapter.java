@@ -24,7 +24,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassViewHol
         this.classes = classrooms;
     }
 
-    public void setCourses(List<FancyClassroom> classrooms) {
+    public void setClasses(List<FancyClassroom> classrooms) {
         this.classes = classrooms;
         notifyDataSetChanged();
     }

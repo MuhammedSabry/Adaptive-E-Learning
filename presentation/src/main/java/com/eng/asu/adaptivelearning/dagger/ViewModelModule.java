@@ -8,6 +8,7 @@ import com.eng.asu.adaptivelearning.viewmodel.MainViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.MyCoursesViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.ParentalControlViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.RegisterViewModel;
+import com.eng.asu.adaptivelearning.viewmodel.SavedCoursesViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.SettingsViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.SplashViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.TeacherDashboardViewModel;
@@ -76,4 +77,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TeacherDashboardViewModel.class)
     abstract ViewModel provideTeacherDashboardViewModel(TeacherDashboardViewModel myCoursesViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SavedCoursesViewModel.class)
+    abstract ViewModel provideSavedCoursesViewModel(SavedCoursesViewModel myCoursesViewModel);
+
 }

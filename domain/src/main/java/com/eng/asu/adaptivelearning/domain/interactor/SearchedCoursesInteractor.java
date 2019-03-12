@@ -13,20 +13,20 @@ import javax.inject.Inject;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 
-public class NewCoursesInteractor extends FlowableUseCase<List<FancyCourse>, String> {
+public class SearchedCoursesInteractor extends FlowableUseCase<List<FancyCourse>, String> {
 
     private CourseService courseService;
 
     @Inject
-    NewCoursesInteractor(BackgroundExecutionThread backgroundExecutionThread,
-                         PostExecutionThread postExecutionThread,
-                         CourseService courseService) {
+    SearchedCoursesInteractor(BackgroundExecutionThread backgroundExecutionThread,
+                              PostExecutionThread postExecutionThread,
+                              CourseService courseService) {
         super(backgroundExecutionThread, postExecutionThread);
         this.courseService = courseService;
     }
 
     @Override
-    protected Flowable<List<FancyCourse>> interact(String token) {
-        return courseService.getNewCourses().toFlowable(BackpressureStrategy.BUFFER);
+    protected Flowable<List<FancyCourse>> interact(String category) {
+        return courseService.getCoursesByCategory(category).toFlowable(BackpressureStrategy.BUFFER);
     }
 }

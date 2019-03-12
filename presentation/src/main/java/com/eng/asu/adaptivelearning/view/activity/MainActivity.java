@@ -1,6 +1,10 @@
 package com.eng.asu.adaptivelearning.view.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,14 +17,17 @@ import com.eng.asu.adaptivelearning.databinding.ActivityMainBinding;
 import com.eng.asu.adaptivelearning.view.adapter.MainPagerAdapter;
 import com.eng.asu.adaptivelearning.viewmodel.MainViewModel;
 
+import java.io.Serializable;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Serializable {
 
     private ActivityMainBinding mainBinding;
     private MainPagerAdapter mainPagerAdapter;
@@ -31,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeActivity();
+        search();
     }
 
     private void initializeActivity() {
@@ -61,8 +69,25 @@ public class MainActivity extends AppCompatActivity {
         userName = headerView.findViewById(R.id.user_name);
     }
 
+    public void viewProfile(View view){
+        Intent intent = new Intent(this, UserProfile.class);
+        startActivity(intent);
+    }
+
     private void initDataBinding() {
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+    }
+
+    private void search(){
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String category = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("searchQuery", category);
+            Intent i= new Intent(MainActivity.this, SearchableActivity.class);
+            i.putExtra(Intent.EXTRA_TEXT, category);
+            startActivity(i);
+        }
+
     }
 
     public boolean onDrawerItemClicked(MenuItem selectedItem) {
@@ -96,6 +121,27 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = this.getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.menu_settings).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        //searchView.setSuggestionsAdapter();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return true;
     }
 

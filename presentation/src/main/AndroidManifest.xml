@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
+        <activity android:name=".view.activity.UserProfile" />
+        <activity android:name=".view.activity.CourseInfo" />
+        <activity android:name=".view.activity.SearchableActivity" />
         <activity
             android:name=".view.activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -24,26 +26,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.LoginActivity"
             android:label="@string/login_activity_label"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/main_activity_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
 
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity
             android:name=".view.activity.RegisterActivity"
             android:label="@string/register_activity_label"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".view.activity.CreateClassroomActivity" />
-
         <activity android:name=".view.activity.ChildInformations" />
-
     </application>
 
 </manifest>

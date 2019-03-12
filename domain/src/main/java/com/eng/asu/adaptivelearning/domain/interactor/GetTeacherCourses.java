@@ -1,7 +1,7 @@
 package com.eng.asu.adaptivelearning.domain.interactor;
 
 import com.adaptivelearning.server.FancyModel.FancyCourse;
-import com.eng.asu.adaptivelearning.domain.CourseService;
+import com.eng.asu.adaptivelearning.domain.UserService;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.BackgroundExecutionThread;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.FlowableUseCase;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.PostExecutionThread;
@@ -13,20 +13,20 @@ import javax.inject.Inject;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 
-public class NewCoursesInteractor extends FlowableUseCase<List<FancyCourse>, String> {
+public class GetTeacherCourses extends FlowableUseCase<List<FancyCourse>, Void> {
 
-    private CourseService courseService;
+    private UserService userService;
 
     @Inject
-    NewCoursesInteractor(BackgroundExecutionThread backgroundExecutionThread,
-                         PostExecutionThread postExecutionThread,
-                         CourseService courseService) {
+    GetTeacherCourses(BackgroundExecutionThread backgroundExecutionThread,
+                       PostExecutionThread postExecutionThread,
+                       UserService userService) {
         super(backgroundExecutionThread, postExecutionThread);
-        this.courseService = courseService;
+        this.userService = userService;
     }
 
     @Override
-    protected Flowable<List<FancyCourse>> interact(String token) {
-        return courseService.getNewCourses().toFlowable(BackpressureStrategy.BUFFER);
+    protected Flowable<List<FancyCourse>> interact(Void param) {
+        return userService.getTeacherCourses().toFlowable(BackpressureStrategy.BUFFER);
     }
 }
