@@ -12,6 +12,7 @@ import com.adaptivelearning.server.constants.Param;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -60,7 +61,7 @@ public interface RetrofitService {
 
     @GET(Mapping.COURSE)
     Observable<FancyCourse> getCourse(@Query(Param.ACCESS_TOKEN) String token,
-                                      @Query(Param.COURSE_ID) Integer courseId);
+                                      @Query(Param.COURSE_ID) Long courseId);
 
     //General APIs
     @GET(Mapping.NEW_COURSES)
@@ -113,6 +114,11 @@ public interface RetrofitService {
     Observable<Response<ResponseBody>> saveCourse(@Field(Param.ACCESS_TOKEN) String token,
                                                       @Field(Param.COURSE_ID) long courseId);
 
+    @FormUrlEncoded
+    @POST(Mapping.JOIN_CLASSROOM)
+    Observable<Response<ResponseBody>> joinClassroom(@Field(Param.ACCESS_TOKEN) String token,
+                                                  @Field(Param.PASSCODE) String passcode);
+
 
     @GET(Mapping.STUDENT_COURSES)
     Observable<List<FancyCourse>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);
@@ -138,5 +144,6 @@ public interface RetrofitService {
 
     @GET(Mapping.LECTURE)
     Observable<FancyLecture> getLecture(@Query(Param.LECTURE_ID) long lectureId);
+
 
 }

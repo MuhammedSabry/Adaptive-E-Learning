@@ -5,9 +5,8 @@ import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.domain.interactor.GetCourseById;
 import com.eng.asu.adaptivelearning.domain.interactor.GetEnrolledCourses;
 import com.eng.asu.adaptivelearning.domain.interactor.GetStudentClassrooms;
-import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
-
-import org.reactivestreams.Publisher;
+import com.eng.asu.adaptivelearning.domain.interactor.JoinClassroomInteractor;
+import com.eng.asu.adaptivelearning.model.BaseListener;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Flowable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
 
 public class MyCoursesViewModel extends ViewModel {
@@ -30,7 +30,8 @@ public class MyCoursesViewModel extends ViewModel {
     @Inject
     MyCoursesViewModel( GetEnrolledCourses getEnrolledCourses,
                        GetStudentClassrooms getStudentClassrooms,
-                        GetCourseById getCourseById) {
+                        GetCourseById getCourseById,
+                        JoinClassroomInteractor joinClassroomInteractor) {
         super();
         this.getEnrolledCourses = getEnrolledCourses;
         this.getStudentClassrooms = getStudentClassrooms;
@@ -50,7 +51,7 @@ public class MyCoursesViewModel extends ViewModel {
         .onErrorReturnItem(Collections.emptyList()));
     }
 
-    public LiveData<FancyCourse> getCourse(Integer courseId){
+    public LiveData<FancyCourse> getCourse(long courseId){
         return LiveDataReactiveStreams.fromPublisher(getCourseById.execute(courseId)
         .onErrorReturnItem(new FancyCourse()));
     }

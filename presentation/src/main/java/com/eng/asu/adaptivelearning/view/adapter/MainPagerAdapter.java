@@ -2,6 +2,7 @@ package com.eng.asu.adaptivelearning.view.adapter;
 
 import com.eng.asu.adaptivelearning.view.fragment.AboutFragment;
 import com.eng.asu.adaptivelearning.view.fragment.HomeFragment;
+import com.eng.asu.adaptivelearning.view.fragment.MyClassroomsFragment;
 import com.eng.asu.adaptivelearning.view.fragment.MyCoursesFragment;
 import com.eng.asu.adaptivelearning.view.fragment.ParentalControlFragment;
 import com.eng.asu.adaptivelearning.view.fragment.SavedCoursesFragment;
@@ -29,14 +30,16 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return new MyCoursesFragment();
             case 3:
-                return new ParentalControlFragment();
+                return new MyClassroomsFragment();
             case 4:
-                return new TeacherDashboardFragment();
+                return new ParentalControlFragment();
             case 5:
-                return new SavedCoursesFragment();
+                return new TeacherDashboardFragment();
             case 6:
-                return new SettingsFragment();
+                return new SavedCoursesFragment();
             case 7:
+                return new SettingsFragment();
+            case 8:
                 return new AboutFragment();
             default:
                 return new HomeFragment();
@@ -52,14 +55,16 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return "My Courses";
             case 3:
-                return "Parental Control";
+                return "My Classrooms";
             case 4:
-                return "Dashboard";
+                return "Parental Control";
             case 5:
-                return "Saved Courses";
+                return "Dashboard";
             case 6:
-                return "Settings";
+                return "Saved Courses";
             case 7:
+                return "Settings";
+            case 8:
                 return "About";
             default:
                 return "Home";
@@ -68,6 +73,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 7;
+        return 8;
     }
 }

@@ -3,6 +3,7 @@ package com.eng.asu.adaptivelearning.viewmodel;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.domain.interactor.EnrollInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.HotCoursesInteractor;
+import com.eng.asu.adaptivelearning.domain.interactor.JoinClassroomInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.NewCoursesInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.SaveCourseInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.SearchedCoursesInteractor;
@@ -28,11 +29,12 @@ public class HomeViewModel extends ViewModel {
     private final SearchedCoursesInteractor searchedCoursesInteractor;
     private final EnrollInteractor enrollInteractor;
     private final SaveCourseInteractor saveCourseInteractor;
+    private final JoinClassroomInteractor joinClassroomInteractor;
     private CompositeDisposable disposables;
 
     @Inject
     HomeViewModel(HotCoursesInteractor hotCoursesInteractor, NewCoursesInteractor newCoursesInteractor, SearchedCoursesInteractor searchedCoursesInteractor,EnrollInteractor enrollInteractor,
-                  SaveCourseInteractor saveCourseInteractor) {
+                  SaveCourseInteractor saveCourseInteractor, JoinClassroomInteractor joinClassroomInteractor) {
         super();
         this.hotCoursesInteractor = hotCoursesInteractor;
         this.newCoursesInteractor = newCoursesInteractor;
@@ -40,6 +42,7 @@ public class HomeViewModel extends ViewModel {
         this.enrollInteractor = enrollInteractor;
         this.disposables = new CompositeDisposable();
         this.saveCourseInteractor = saveCourseInteractor;
+        this.joinClassroomInteractor = joinClassroomInteractor;
     }
 
     public LiveData<List<FancyCourse>> getNewCourses() {
@@ -69,6 +72,12 @@ public class HomeViewModel extends ViewModel {
     public void saveCourse(long courseId, BaseListener listener){
         disposables.add(saveCourseInteractor.execute(courseId)
                 .subscribe(() -> listener.onSuccess("Successfully saved"),
+                        throwable -> listener.onFail(throwable.getMessage())));
+    }
+
+    public void joinClassroom(String passcode, BaseListener listener){
+        disposables.add(joinClassroomInteractor.execute(passcode)
+                .subscribe(() -> listener.onSuccess("Successfully joined"),
                         throwable -> listener.onFail(throwable.getMessage())));
     }
 

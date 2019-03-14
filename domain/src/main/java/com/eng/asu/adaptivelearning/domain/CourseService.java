@@ -13,5 +13,5 @@ public interface CourseService {
 
     Observable<List<FancyCourse>> getCoursesByCategory(String category);
 
-    Observable<FancyCourse> getCourse(Integer courseId);
+    Observable<FancyCourse> getCourse(Long courseId);
 }

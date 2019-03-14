@@ -12,6 +12,11 @@
         android:title="My courses" />
 
     <item
+        android:id="@+id/my_classroom_action"
+        android:icon="@drawable/ic_my_courses"
+        android:title="My classrooms" />
+
+    <item
         android:id="@+id/parent_panel_action"
         android:icon="@drawable/ic_parent_panel"
         android:title="Parental control" />
@@ -24,7 +29,7 @@
     <item
         android:id="@+id/saved_courses_action"
         android:icon="@drawable/ic_save_black_24dp"
-        android:title="Saved Courses" />
+        android:title="Saved courses" />
 
     <item
         android:id="@+id/settings_action"

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.eng.asu.adaptivelearning.view.fragment.MyClassroomsFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/joinClassroom"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Join classroom"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            tools:ignore="MissingConstraints" />
+
+        <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
+            android:id="@+id/classes_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clipToPadding="false"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/joinClassroom"
+            tools:listitem="@layout/itemview_classroom" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

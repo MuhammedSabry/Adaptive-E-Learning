@@ -132,6 +132,12 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
+    public Completable joinClassroom(String passcode) {
+        return serviceApi.joinClassroom(authToken, passcode)
+                .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
     public Observable<List<FancyCourse>> getHotCourses() {
         return serviceApi.getHotCourses();
     }
@@ -147,7 +153,7 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<FancyCourse> getCourse(Integer courseId) {
+    public Observable<FancyCourse> getCourse(Long courseId) {
         return serviceApi.getCourse(authToken, courseId);
     }
 

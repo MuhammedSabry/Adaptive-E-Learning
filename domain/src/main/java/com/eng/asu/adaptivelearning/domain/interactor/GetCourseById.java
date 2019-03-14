@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 
-public class GetCourseById extends FlowableUseCase<FancyCourse, Integer>{
+public class GetCourseById extends FlowableUseCase<FancyCourse, Long>{
     CourseService courseService;
 
     @Inject
@@ -21,7 +21,7 @@ public class GetCourseById extends FlowableUseCase<FancyCourse, Integer>{
     }
 
     @Override
-    protected Flowable<FancyCourse> interact(Integer param) {
+    protected Flowable<FancyCourse> interact(Long param) {
         return courseService.getCourse(param).toFlowable(BackpressureStrategy.BUFFER);
     }
 

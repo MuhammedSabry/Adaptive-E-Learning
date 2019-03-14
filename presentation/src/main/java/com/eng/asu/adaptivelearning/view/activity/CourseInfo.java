@@ -29,8 +29,8 @@ public class CourseInfo extends AppCompatActivity {
     }
 
     private void subscribeToCourseData() {
-        Integer i = courseId.intValue();
-        myCoursesViewModel.getCourse(i).observe(this, this::setViews);
+        //Integer i = courseId.intValue();
+        myCoursesViewModel.getCourse(courseId).observe(this, this::setViews);
     }
 
     private void initViewModel() {

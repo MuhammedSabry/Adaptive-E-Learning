@@ -50,7 +50,6 @@ public class MyCoursesFragment extends Fragment {
 
     private void subscribe() {
         viewModel.getUserCourses().observe(this, coursesAdapter::setCourses);
-        viewModel.getStudentClassrooms().observe(this, classAdapter::setClasses);
     }
 
     private void initViews() {
@@ -58,7 +57,5 @@ public class MyCoursesFragment extends Fragment {
         binding.coursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         binding.coursesList.setAdapter(coursesAdapter);
         classAdapter = new ClassAdapter(getContext(), Collections.emptyList());
-//        binding.classesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-//        binding.classesList.setAdapter(classAdapter);
     }
 }

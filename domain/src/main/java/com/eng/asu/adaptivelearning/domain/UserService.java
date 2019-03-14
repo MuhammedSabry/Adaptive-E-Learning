@@ -43,4 +43,5 @@ public interface UserService {
 
     Observable<List<FancyClassroom>> getStudentClassrooms();
 
+    Completable joinClassroom(String passcode);
 }

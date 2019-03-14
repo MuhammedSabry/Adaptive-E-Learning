@@ -53,16 +53,11 @@ public class SavedCoursesFragment extends Fragment {
 
     private void initViews() {
         savedCoursesAdapter = new CoursesAdapter(getContext(), Collections.emptyList(), savedCoursesViewModel);
-        binding.savedCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.savedCoursesList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         binding.savedCoursesList.setAdapter(savedCoursesAdapter);
     }
 
     private void subscribe() {
-        savedCoursesViewModel.getSavedCourses().observe(this, fancyCourses ->
-        {
-            for(int i=0; i<fancyCourses.size(); i++)
-                Log.d("fancyCOURSES", fancyCourses.get(i).getTitle());
-        });
         savedCoursesViewModel.getSavedCourses().observe(this, savedCoursesAdapter::setCourses);
     }
 }
