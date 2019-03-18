@@ -1,6 +1,7 @@
 package com.eng.asu.adaptivelearning.dagger;
 
 import com.eng.asu.adaptivelearning.viewmodel.AboutViewModel;
+import com.eng.asu.adaptivelearning.viewmodel.CourseContentViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.CreateClassroomViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.LoginViewModel;
@@ -82,5 +83,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SavedCoursesViewModel.class)
     abstract ViewModel provideSavedCoursesViewModel(SavedCoursesViewModel myCoursesViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CourseContentViewModel.class)
+    abstract ViewModel provideCourseContentViewModel(CourseContentViewModel courseContentViewModel);
 
 }

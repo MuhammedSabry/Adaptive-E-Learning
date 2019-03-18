@@ -38,6 +38,8 @@ public class NetworkRepository implements UserService,
     NetworkRepository(UserStorage userStorage) {
         this.authToken = userStorage.getAuthToken();
 
+        userStorage.setOnTokenChangeListener(token -> authToken = token);
+
         //Configuring the logcat to display request/response parameters
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();

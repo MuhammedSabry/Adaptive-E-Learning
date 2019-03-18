@@ -1,7 +1,6 @@
 package com.eng.asu.adaptivelearning.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +10,9 @@ import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.viewmodel.MyCoursesViewModel;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 public class CourseInfo extends AppCompatActivity {
     private TextView courseName, detailedTitle, courseDescription, courseCreatorName, courseCreatorEmail, courseContent;
@@ -43,9 +45,9 @@ public class CourseInfo extends AppCompatActivity {
         courseName.setText(course.getTitle());
         detailedTitle.setText(course.getDetailedTitle());
         courseDescription.setText(course.getDescription());
-        courseCreatorName.setText(course.getPublisher().getFirstName()+" "+course.getPublisher().getLastName());
+        courseCreatorName.setText(course.getPublisher().getFirstName() + " " + course.getPublisher().getLastName());
         courseCreatorEmail.setText(course.getPublisher().getEmail());
-        for(int i=0; i<course.getSections().size(); i++) {
+        for (int i = 0; i < course.getSections().size(); i++) {
             courseContent.append(course.getSections().get(i).getTitle() + "\n");
         }
     }
@@ -62,6 +64,8 @@ public class CourseInfo extends AppCompatActivity {
     }
 
     public void watchContent(View view) {
-
+        Intent intent = new Intent(this, ActivityCourseContent.class);
+        intent.putExtra(ActivityCourseContent.COURSE_ID, courseId);
+        startActivity(intent);
     }
 }

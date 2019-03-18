@@ -14,4 +14,10 @@ public interface UserStorage {
     void setAuthToken(String token);
 
     void removeToken();
+
+    void setOnTokenChangeListener(OnTokenChangeListener listener);
+
+    interface OnTokenChangeListener {
+        void onTokenChanged(String token);
+    }
 }

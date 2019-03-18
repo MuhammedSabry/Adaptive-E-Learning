@@ -10,28 +10,16 @@
             type="com.eng.asu.adaptivelearning.view.fragment.MyCoursesFragment" />
     </data>
 
-            <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
-                android:id="@+id/courses_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:clipToPadding="false"
-                android:padding="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/your_children_label"
-                tools:listitem="@layout/itemview_course" />
-
-        <!--<com.eng.asu.adaptivelearning.view.custom.CustomRecycler-->
-            <!--android:id="@+id/classes_list"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@color/white"-->
-            <!--android:clipToPadding="false"-->
-            <!--android:padding="4dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="@id/courses_list"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--tools:listitem="@layout/itemview_classroom" />-->
-
+    <com.eng.asu.adaptivelearning.view.custom.CustomRecycler
+        android:id="@+id/courses_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/your_children_label"
+        tools:listitem="@layout/itemview_course" />
 </layout>

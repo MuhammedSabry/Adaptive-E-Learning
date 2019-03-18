@@ -13,14 +13,21 @@ import javax.inject.Inject;
 
 public class UserAccountStorage implements UserStorage {
 
+    private static final String PREF_TOKEN_KEY = "pref_token";
     private final ObjectPreference<FancyUser> userPreference;
     private final StringPreference tokenPreference;
+    private OnTokenChangeListener tokenListener;
 
     @Inject
     UserAccountStorage(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         userPreference = new ObjectPreference<>(sharedPreferences, "pref_user", new FancyUser(), FancyUser.class);
-        tokenPreference = new StringPreference(sharedPreferences, "pref_token");
+        tokenPreference = new StringPreference(sharedPreferences, PREF_TOKEN_KEY);
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener((sharedPreferences1, key) -> {
+            if (key.equals(PREF_TOKEN_KEY) && tokenListener != null)
+                tokenListener.onTokenChanged(getAuthToken());
+        });
     }
 
     @Override
@@ -51,6 +58,11 @@ public class UserAccountStorage implements UserStorage {
     @Override
     public void removeToken() {
         tokenPreference.delete();
+    }
+
+    @Override
+    public void setOnTokenChangeListener(OnTokenChangeListener listener) {
+        this.tokenListener = listener;
     }
 
 }

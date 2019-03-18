@@ -26,7 +26,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('D:\\androidStudioProjects\\AdaptiveE-learning\\libs\\server.jar')
+    implementation files('../libs/server.jar')
     implementation project(':domain')
 
     /* Dagger 2 core */

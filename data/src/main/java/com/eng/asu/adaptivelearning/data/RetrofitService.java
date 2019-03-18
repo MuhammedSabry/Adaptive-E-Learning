@@ -3,7 +3,7 @@ package com.eng.asu.adaptivelearning.data;
 import com.adaptivelearning.server.FancyModel.FancyCategory;
 import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
-import com.adaptivelearning.server.FancyModel.FancyLecture;
+import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuestion;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
@@ -12,7 +12,6 @@ import com.adaptivelearning.server.constants.Param;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -48,10 +47,6 @@ public interface RetrofitService {
     //User
     @GET(Mapping.PROFILE)
     Observable<FancyUser> getUserData(@Query(Param.ACCESS_TOKEN) String token);
-
-//    @FormUrlEncoded
-//    @POST(Mapping.SAVED_COURSES)
-//    Observable<Response<ResponseBody>> saveCourse(@Query(Param.COURSE_ID) int courseId);
 
     @DELETE(Mapping.SAVED_COURSES)
     Observable<Response<ResponseBody>> removeSavedCourse(@Query(Param.COURSE_ID) int courseId);
@@ -112,12 +107,12 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST(Mapping.SAVED_COURSES)
     Observable<Response<ResponseBody>> saveCourse(@Field(Param.ACCESS_TOKEN) String token,
-                                                      @Field(Param.COURSE_ID) long courseId);
+                                                  @Field(Param.COURSE_ID) long courseId);
 
     @FormUrlEncoded
     @POST(Mapping.JOIN_CLASSROOM)
     Observable<Response<ResponseBody>> joinClassroom(@Field(Param.ACCESS_TOKEN) String token,
-                                                  @Field(Param.PASSCODE) String passcode);
+                                                     @Field(Param.PASSCODE) String passcode);
 
 
     @GET(Mapping.STUDENT_COURSES)
@@ -133,17 +128,19 @@ public interface RetrofitService {
     Observable<List<FancyClassroom>> getStudentClassrooms(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.QUIZ)
-    Observable<FancyQuiz> getQuiz(@Query(Param.QUIZ_ID) long quizId);
+    Observable<FancyQuiz> getQuiz(@Query(Param.ACCESS_TOKEN) String token,
+                                  @Query(Param.QUIZ_ID) long quizId);
 
     @GET(Mapping.STUDENT_START_QUIZ)
-    Observable<FancyQuiz> startQuiz(@Query(Param.QUIZ_ID) long quizId);
+    Observable<FancyQuiz> startQuiz(@Query(Param.ACCESS_TOKEN) String token,
+                                    @Query(Param.QUIZ_ID) long quizId);
 
     @GET(Mapping.STUDENT_SUBMIT_QUIZ)
-    Observable<FancyQuiz> submitQuiz(@Query(Param.QUIZ_ID) long quizId,
+    Observable<FancyQuiz> submitQuiz(@Query(Param.ACCESS_TOKEN) String token,
+                                     @Query(Param.QUIZ_ID) long quizId,
                                      @Body List<FancyQuestion> answers);
 
-    @GET(Mapping.LECTURE)
-    Observable<FancyLecture> getLecture(@Query(Param.LECTURE_ID) long lectureId);
-
-
+    @GET(Mapping.FILE)
+    Observable<FancyMediaFile> getMedia(@Query(Param.ACCESS_TOKEN) String token,
+                                        @Query(Param.FILE_ID) String mediaId);
 }

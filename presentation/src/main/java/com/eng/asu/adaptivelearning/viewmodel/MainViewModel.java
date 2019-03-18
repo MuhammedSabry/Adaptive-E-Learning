@@ -21,6 +21,7 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<FancyUser> getUserData() {
         return LiveDataReactiveStreams.fromPublisher(userProfileInteractor.execute()
-                .toFlowable());
+                .toFlowable()
+                .onErrorReturnItem(new FancyUser()));
     }
 }
