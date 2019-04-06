@@ -2,6 +2,7 @@ package com.eng.asu.adaptivelearning.data;
 
 import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
+import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
@@ -157,6 +158,11 @@ public class NetworkRepository implements UserService,
     @Override
     public Observable<FancyCourse> getCourse(Long courseId) {
         return serviceApi.getCourse(authToken, courseId);
+    }
+
+    @Override
+    public Observable<FancyMediaFile> getMediaFile(Long mediaContentId) {
+        return serviceApi.getMedia(authToken, mediaContentId);
     }
 
     @Override

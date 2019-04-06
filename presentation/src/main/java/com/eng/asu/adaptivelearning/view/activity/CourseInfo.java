@@ -64,8 +64,8 @@ public class CourseInfo extends AppCompatActivity {
     }
 
     public void watchContent(View view) {
-        Intent intent = new Intent(this, ActivityCourseContent.class);
-        intent.putExtra(ActivityCourseContent.COURSE_ID, courseId);
+        Intent intent = new Intent(this, CourseContentActivity.class);
+        intent.putExtra(CourseContentActivity.COURSE_ID, courseId);
         startActivity(intent);
     }
 }

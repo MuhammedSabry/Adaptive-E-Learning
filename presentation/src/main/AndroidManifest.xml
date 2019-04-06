@@ -48,7 +48,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".view.activity.CreateClassroomActivity" />
         <activity android:name=".view.activity.ChildInformations" />
-        <activity android:name=".view.activity.ActivityCourseContent" />
+        <activity android:name=".view.activity.CourseContentActivity" />
     </application>
 
 </manifest>

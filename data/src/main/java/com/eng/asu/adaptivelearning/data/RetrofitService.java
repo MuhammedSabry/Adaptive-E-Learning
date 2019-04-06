@@ -142,5 +142,5 @@ public interface RetrofitService {
 
     @GET(Mapping.FILE)
     Observable<FancyMediaFile> getMedia(@Query(Param.ACCESS_TOKEN) String token,
-                                        @Query(Param.FILE_ID) String mediaId);
+                                        @Query(Param.FILE_ID) long mediaId);
 }
