@@ -98,13 +98,11 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     public void onLectureClicked(FancyLecture lecture) {
         viewModel.onLectureClicked(lecture);
 
-        if (lecture.getQuiz())
-            Toasty.info(this, "Quiz clicked").show();
-        else if (lecture.getFile())
-            Toasty.info(this, "File clicked").show();
-        else if (lecture.getVideo())
-            Toasty.info(this, "Video clicked").show();
-        else
+        if (lecture.getQuiz()) {
+            Intent quizOverViewIntent = new Intent(this, QuizOverviewActivity.class);
+            quizOverViewIntent.putExtra(QuizOverviewActivity.QUIZ_ID_INTENT_EXTRA, lecture.getLectureContentId());
+            startActivity(quizOverViewIntent);
+        } else if (!lecture.getFile() && !lecture.getVideo())
             Toasty.error(this, "Invalid lecture content").show();
 
     }

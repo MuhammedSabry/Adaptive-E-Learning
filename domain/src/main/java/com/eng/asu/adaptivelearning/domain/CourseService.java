@@ -2,9 +2,12 @@ package com.eng.asu.adaptivelearning.domain;
 
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
+import com.adaptivelearning.server.FancyModel.FancyQuestion;
+import com.adaptivelearning.server.FancyModel.FancyQuiz;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public interface CourseService {
@@ -17,4 +20,10 @@ public interface CourseService {
     Observable<FancyCourse> getCourse(Long courseId);
 
     Observable<FancyMediaFile> getMediaFile(Long mediaContentId);
+
+    Observable<FancyQuiz> getQuiz(Long quizId);
+
+    Completable startQuiz(Long quizID);
+
+    Completable submitQuizAnswers(Long quizId, List<FancyQuestion> answers);
 }

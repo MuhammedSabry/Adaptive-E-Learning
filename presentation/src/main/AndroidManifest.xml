@@ -49,6 +49,8 @@
         <activity android:name=".view.activity.CreateClassroomActivity" />
         <activity android:name=".view.activity.ChildInformations" />
         <activity android:name=".view.activity.CourseContentActivity" />
+        <activity android:name=".view.activity.QuizOverviewActivity" />
+        <activity android:name=".view.activity.QuizActivity" />
     </application>
 
 </manifest>

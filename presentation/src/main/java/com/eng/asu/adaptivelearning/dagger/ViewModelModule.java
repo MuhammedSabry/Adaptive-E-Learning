@@ -8,6 +8,8 @@ import com.eng.asu.adaptivelearning.viewmodel.LoginViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.MainViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.MyCoursesViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.ParentalControlViewModel;
+import com.eng.asu.adaptivelearning.viewmodel.QuizOverviewViewModel;
+import com.eng.asu.adaptivelearning.viewmodel.QuizViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.RegisterViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.SavedCoursesViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.SettingsViewModel;
@@ -89,4 +91,13 @@ abstract class ViewModelModule {
     @ViewModelKey(CourseContentViewModel.class)
     abstract ViewModel provideCourseContentViewModel(CourseContentViewModel courseContentViewModel);
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(QuizOverviewViewModel.class)
+    abstract ViewModel provideQuizOverviewViewModel(QuizOverviewViewModel quizOverviewViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(QuizViewModel.class)
+    abstract ViewModel provideQuizViewModel(QuizViewModel quizViewModel);
 }

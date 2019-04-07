@@ -1,5 +1,6 @@
 package com.eng.asu.adaptivelearning.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,8 +81,6 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
 
         FancyLecture lecture = sections.get(groupPosition).getFancyLectures().get(childPosition);
 
-        binding.getRoot().setOnClickListener(v -> listener.onLectureClicked(lecture));
-
         bindLecture(lecture, childPosition, groupPosition, binding);
 
         return binding.getRoot();
@@ -92,6 +91,7 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
         sectionBinding.arrow.setSelected(isExpanded);
     }
 
+    @SuppressLint("SetTextI18n")
     private void bindLecture(FancyLecture lecture, int childPosition, int parentPosition, ItemviewLectureBinding binding) {
         int lectureNumber = childPosition + 1;
 
@@ -106,11 +106,14 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
             binding.button.setText("Take Quiz");
         } else if (lecture.getFile()) {
             binding.type.setImageResource(R.drawable.ic_file);
-            binding.button.setText("Download File");
+            binding.button.setText("Download");
         } else if (lecture.getVideo()) {
             binding.type.setImageResource(R.drawable.ic_video);
             binding.button.setText("Play");
+        } else {
+            binding.button.setText("Unknown");
         }
+        binding.button.setOnClickListener(v -> listener.onLectureClicked(lecture));
     }
 
     @Override

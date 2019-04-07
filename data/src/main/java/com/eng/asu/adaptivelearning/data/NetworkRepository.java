@@ -3,6 +3,8 @@ package com.eng.asu.adaptivelearning.data;
 import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
+import com.adaptivelearning.server.FancyModel.FancyQuestion;
+import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
@@ -163,6 +165,23 @@ public class NetworkRepository implements UserService,
     @Override
     public Observable<FancyMediaFile> getMediaFile(Long mediaContentId) {
         return serviceApi.getMedia(authToken, mediaContentId);
+    }
+
+    @Override
+    public Observable<FancyQuiz> getQuiz(Long quizId) {
+        return serviceApi.getQuiz(authToken, quizId);
+    }
+
+    @Override
+    public Completable startQuiz(Long quizID) {
+        return serviceApi.startQuiz(authToken, quizID)
+                .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Completable submitQuizAnswers(Long quizId, List<FancyQuestion> answers) {
+        return serviceApi.submitQuiz(authToken, quizId, answers)
+                .flatMapCompletable(this::completableSourceMapper);
     }
 
     @Override
