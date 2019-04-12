@@ -182,7 +182,7 @@ public class NetworkRepository implements UserService,
     @Override
     public Completable submitQuizAnswers(Long quizId, List<StudentAnswer> answers) {
         Gson gson = new Gson();
-        return serviceApi.submitQuiz(authToken, quizId, gson.toJson(answers))
+        return serviceApi.submitQuiz(authToken, quizId, "{\"questions\":" + gson.toJson(answers) + "}")
                 .flatMapCompletable(this::completableSourceMapper);
     }
 
