@@ -5,14 +5,14 @@ public class QuizTime {
     private String min;
     private String second;
 
-    public QuizTime(long timeInSeconds) {
-        if (timeInSeconds <= 0)
+    public QuizTime(long timeInMinutes) {
+        if (timeInMinutes <= 0)
             return;
-        this.hour = String.valueOf(timeInSeconds / (60 * 60));
+        this.hour = String.valueOf(timeInMinutes / 60);
         this.hour = appendZeroes(this.hour);
-        this.min = String.valueOf((timeInSeconds / 60) % 60);
+        this.min = String.valueOf(timeInMinutes % 60);
         this.min = appendZeroes(this.min);
-        this.second = String.valueOf(timeInSeconds % 60);
+        this.second = String.valueOf((timeInMinutes * 60) % 60);
         this.second = appendZeroes(this.second);
     }
 

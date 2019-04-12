@@ -1,5 +1,6 @@
 package com.eng.asu.adaptivelearning.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -67,7 +68,7 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
     private void onQuizTimeout() {
         Toasty.info(this, "Quiz timeout,quiz will auto submit now").show();
         binding.submit.setEnabled(false);
-        viewModel.submitQuiz(this);
+        viewModel.submitQuiz(questionsAdapter.getAnswers(), this);
     }
 
     @Override
@@ -84,11 +85,15 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_quiz);
     }
 
+    @SuppressLint("SetTextI18n")
     private void initViews() {
         binding.submit.setEnabled(false);
         binding.timer.setText("00:00:00");
+
         questionsAdapter = new QuestionsAdapter(this, Collections.emptyList());
         binding.questionList.setAdapter(questionsAdapter);
+
+        binding.submit.setOnClickListener(v -> onSubmitClicked());
     }
 
     @Override
@@ -106,5 +111,24 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
     @Override
     public void onFallBack() {
 
+    }
+
+    public void onSubmitClicked() {
+        viewModel.submitQuiz(questionsAdapter.getAnswers(), new BaseListener() {
+            @Override
+            public void onSuccess(String message) {
+                Toasty.success(QuizActivity.this, message).show();
+                finish();
+            }
+
+            @Override
+            public void onFail(String message) {
+                Toasty.error(QuizActivity.this, message).show();
+            }
+
+            @Override
+            public void onFallBack() {
+            }
+        });
     }
 }

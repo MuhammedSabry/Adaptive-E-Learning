@@ -31,11 +31,11 @@ public class GetCourseById extends FlowableUseCase<FancyCourse, Long> {
                             .map(section -> {
                                 section.setFancyLectures(Flowable.fromIterable(section.getFancyLectures())
                                         .map(lecture -> {
-                                            if (lecture.getVideo() == null)
+                                            if (lecture.isVideo() == null)
                                                 lecture.setVideo(false);
-                                            if (lecture.getQuiz() == null)
+                                            if (lecture.isQuiz() == null)
                                                 lecture.setQuiz(false);
-                                            if (lecture.getFile() == null)
+                                            if (lecture.isFile() == null)
                                                 lecture.setFile(false);
                                             return lecture;
                                         })

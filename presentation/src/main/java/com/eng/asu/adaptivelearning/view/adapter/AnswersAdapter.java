@@ -1,7 +1,9 @@
 package com.eng.asu.adaptivelearning.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 
@@ -18,6 +20,7 @@ class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersViewHold
     private final Context context;
     private final List<FancyAnswer> answers;
     private final boolean isMultipleChoice;
+    private int checkedPosition;
 
     AnswersAdapter(Context context, List<FancyAnswer> answers, boolean isMultipleChoice) {
         this.context = context;
@@ -39,7 +42,7 @@ class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersViewHold
 
     @Override
     public void onBindViewHolder(@NonNull AnswersViewHolder holder, int position) {
-        holder.bind(answers.get(position));
+        holder.bind(position + 1, answers.get(position));
     }
 
     @Override
@@ -50,29 +53,34 @@ class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersViewHold
     class AnswersViewHolder extends RecyclerView.ViewHolder {
 
         private final CheckedTextView checkedTextView;
-        private long checkedTextViewId;
 
         AnswersViewHolder(@NonNull CheckedTextView itemView) {
             super(itemView);
             this.checkedTextView = itemView;
         }
 
-        void bind(FancyAnswer answer) {
-            this.checkedTextView.setText(answer.getBody());
-            this.checkedTextView.setOnClickListener(v -> this.onAnswerClicked(answer));
-            if (!isMultipleChoice && checkedTextViewId == answer.getAnswerId())
-                this.checkedTextView.setChecked(true);
-            else if (!isMultipleChoice)
-                this.checkedTextView.setChecked(false);
+        @SuppressLint("SetTextI18n")
+        void bind(int prefix, FancyAnswer answer) {
+            this.checkedTextView.setText(prefix + ". " + answer.getBody());
+            this.checkedTextView.setOnClickListener(this::onAnswerClicked);
+
+            if (!isMultipleChoice) {
+                if (checkedPosition == getAdapterPosition())
+                    this.checkedTextView.setChecked(true);
+                else
+                    this.checkedTextView.setChecked(false);
+            }
+
         }
 
-        private void onAnswerClicked(FancyAnswer answer) {
+        private void onAnswerClicked(View v) {
             if (isMultipleChoice) {
                 this.checkedTextView.toggle();
             } else {
-                this.checkedTextViewId = answer.getAnswerId();
+                checkedPosition = getAdapterPosition();
+                ((CheckedTextView) v).setChecked(true);
+                notifyDataSetChanged();
             }
-            notifyDataSetChanged();
         }
     }
 }

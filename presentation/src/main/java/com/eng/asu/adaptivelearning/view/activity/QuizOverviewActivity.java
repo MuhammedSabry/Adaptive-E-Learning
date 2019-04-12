@@ -50,9 +50,9 @@ public class QuizOverviewActivity extends AppCompatActivity {
         }
         binding.start.setEnabled(true);
         binding.quizInstructions.setText(quiz.getInstructions());
-        binding.time.setText(quiz.getTime());
+        binding.time.setText(getString(R.string.quiz_time_in_minutes, quiz.getTime()));
         binding.title.setText(quiz.getTitle());
-        binding.totalMark.setText(quiz.getTotalMark());
+        binding.totalMark.setText(getString(R.string.quiz_total_marks, quiz.getTotalMark()));
         binding.start.setOnClickListener(v -> this.onStartQuizClicked());
     }
 

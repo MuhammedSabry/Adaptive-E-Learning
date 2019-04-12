@@ -11,6 +11,8 @@
     <string name="date_of_birth">%d-%s-%s</string>
     <string name="register_activity_label">Register</string>
     <string name="enroll_button_label">ENROLL</string>
+    <string name="quiz_time_in_minutes">%d Minutes</string>
+    <string name="quiz_total_marks">Total mark: %d</string>
 
     <string-array name="grade">
         <item>Choose school grade</item>

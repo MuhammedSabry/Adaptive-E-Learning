@@ -10,6 +10,7 @@ import com.eng.asu.adaptivelearning.viewmodel.ViewModelFactory;
 import javax.inject.Inject;
 
 import androidx.lifecycle.ViewModelProvider;
+import es.dmoral.toasty.Toasty;
 
 public class LearningApplication extends Application {
 
@@ -31,5 +32,7 @@ public class LearningApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         applicationComponent.inject(this);
+
+        Toasty.Config.getInstance().allowQueue(false).apply();
     }
 }

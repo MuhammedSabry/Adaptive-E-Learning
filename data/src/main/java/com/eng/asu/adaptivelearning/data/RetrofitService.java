@@ -4,7 +4,6 @@ import com.adaptivelearning.server.FancyModel.FancyCategory;
 import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
-import com.adaptivelearning.server.FancyModel.FancyQuestion;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.adaptivelearning.server.constants.Mapping;
@@ -127,7 +126,7 @@ public interface RetrofitService {
     @GET(Mapping.STUDENT_CLASSROOMS)
     Observable<List<FancyClassroom>> getStudentClassrooms(@Query(Param.ACCESS_TOKEN) String token);
 
-    @GET(Mapping.QUIZ)
+    @GET(Mapping.STUDENT_GENERATE_QUIZ)
     Observable<FancyQuiz> getQuiz(@Query(Param.ACCESS_TOKEN) String token,
                                   @Query(Param.QUIZ_ID) long quizId);
 
@@ -140,9 +139,9 @@ public interface RetrofitService {
     @POST(Mapping.STUDENT_SUBMIT_QUIZ)
     Observable<Response<ResponseBody>> submitQuiz(@Field(Param.ACCESS_TOKEN) String token,
                                                   @Field(Param.QUIZ_ID) long quizId,
-                                                  @Body List<FancyQuestion> answers);
+                                                  @Body String answers);
 
-    @GET(Mapping.FILE)
+    @GET(Mapping.TEACHER_MEDIA)
     Observable<FancyMediaFile> getMedia(@Query(Param.ACCESS_TOKEN) String token,
                                         @Query(Param.FILE_ID) long mediaId);
 }

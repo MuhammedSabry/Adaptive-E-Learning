@@ -2,7 +2,6 @@ package com.eng.asu.adaptivelearning.domain;
 
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
-import com.adaptivelearning.server.FancyModel.FancyQuestion;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 
 import java.util.List;
@@ -25,5 +24,5 @@ public interface CourseService {
 
     Completable startQuiz(Long quizID);
 
-    Completable submitQuizAnswers(Long quizId, List<FancyQuestion> answers);
+    Completable submitQuizAnswers(Long quizId, List<StudentAnswer> answers);
 }

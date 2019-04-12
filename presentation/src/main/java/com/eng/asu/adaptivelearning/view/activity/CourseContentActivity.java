@@ -4,6 +4,7 @@ import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyLecture;
@@ -16,7 +17,6 @@ import com.eng.asu.adaptivelearning.databinding.ActivityCourseContentBinding;
 import com.eng.asu.adaptivelearning.view.adapter.SectionsAdapter;
 import com.eng.asu.adaptivelearning.viewmodel.CourseContentViewModel;
 
-import java.io.File;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -53,13 +53,12 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     }
 
     private void downloadFile(FancyMediaFile mediaFile) {
-        File file = new File(getExternalFilesDir(mediaFile.getFileType()), "Adaptive E-Learning");
 
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mediaFile.getFileDownloadUri()))
                 .setTitle(mediaFile.getFileName())
                 .setDescription("Downloading " + mediaFile.getFileName())
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)// Visibility of the download Notification
-                .setDestinationUri(Uri.fromFile(file));
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mediaFile.getFileName());
 
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         downloadManager.enqueue(request);
@@ -98,11 +97,11 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     public void onLectureClicked(FancyLecture lecture) {
         viewModel.onLectureClicked(lecture);
 
-        if (lecture.getQuiz()) {
+        if (lecture.isQuiz()) {
             Intent quizOverViewIntent = new Intent(this, QuizOverviewActivity.class);
             quizOverViewIntent.putExtra(QuizOverviewActivity.QUIZ_ID_INTENT_EXTRA, lecture.getLectureContentId());
             startActivity(quizOverViewIntent);
-        } else if (!lecture.getFile() && !lecture.getVideo())
+        } else if (!lecture.isFile() && !lecture.isVideo())
             Toasty.error(this, "Invalid lecture content").show();
 
     }

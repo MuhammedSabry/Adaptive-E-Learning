@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.AppCompatCheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background"
     android:checkMark="@drawable/check_mark_multi"
     android:checked="false"
     android:gravity="center_vertical"
     android:padding="16dp"
+    android:textSize="20sp"
     android:textColor="@color/colorPrimaryDark"
     tools:text="This is the correct answer" />

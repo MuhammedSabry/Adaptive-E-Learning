@@ -29,11 +29,12 @@ public class QuizOverviewViewModel extends BaseViewModel {
     }
 
     public void startQuiz(long quizId, BaseListener listener) {
-        addDisposable(startQuizInteractor.execute(quizId)
-                .subscribe(() -> listener.onSuccess("Successfully started the quiz"),
-                        error -> {
-                            logError("Couldn't start quiz", error);
-                            listener.onFail("Failed to start quiz");
-                        }));
+        listener.onSuccess("Successfully started the quiz");
+//        addDisposable(startQuizInteractor.execute(quizId)
+//                .subscribe(() -> listener.onSuccess("Successfully started the quiz"),
+//                        error -> {
+//                            logError("Couldn't start quiz", error);
+//                            listener.onFail("Failed to start quiz");
+//                        }));
     }
 }

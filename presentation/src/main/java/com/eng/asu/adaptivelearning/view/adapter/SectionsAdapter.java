@@ -69,7 +69,6 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
         ItemviewSectionBinding sectionName = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.itemview_section, parent, false);
 
         bindSection(sectionName, groupPosition, isExpanded);
-
         return sectionName.getRoot();
     }
 
@@ -101,13 +100,13 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
         binding.position.setText(String.valueOf(lectureNumber));
         binding.title.setText(lecture.getName());
 
-        if (lecture.getQuiz()) {
+        if (lecture.isQuiz()) {
             binding.type.setImageResource(R.drawable.ic_quiz);
             binding.button.setText("Take Quiz");
-        } else if (lecture.getFile()) {
+        } else if (lecture.isFile()) {
             binding.type.setImageResource(R.drawable.ic_file);
             binding.button.setText("Download");
-        } else if (lecture.getVideo()) {
+        } else if (lecture.isVideo()) {
             binding.type.setImageResource(R.drawable.ic_video);
             binding.button.setText("Play");
         } else {

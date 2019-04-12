@@ -43,13 +43,14 @@ public class CourseContentViewModel extends BaseViewModel {
     }
 
     private void getFirstVideo(List<FancySection> sections) {
-        addDisposable(Observable.fromIterable(sections)
-                .flatMapIterable(FancySection::getFancyLectures)
-                .filter(FancyLecture::getVideo)
-                .firstOrError()
-                .flatMap(lecture -> getMediaFileInteractor.execute(lecture.getLectureContentId()))
-                .subscribe(videoLiveData::postValue,
-                        error -> logError("Get First Video", error)));
+        if (sections != null && !sections.isEmpty())
+            addDisposable(Observable.fromIterable(sections)
+                    .flatMapIterable(FancySection::getFancyLectures)
+                    .filter(FancyLecture::isVideo)
+                    .firstOrError()
+                    .flatMap(lecture -> getMediaFileInteractor.execute(lecture.getLectureContentId()))
+                    .subscribe(videoLiveData::postValue,
+                            error -> logError("Get First Video", error)));
     }
 
     public LiveData<FancyMediaFile> getVideoLiveData() {
@@ -57,9 +58,9 @@ public class CourseContentViewModel extends BaseViewModel {
     }
 
     public void onLectureClicked(FancyLecture lecture) {
-        if (lecture.getVideo())
+        if (lecture.isVideo())
             updateVideoData(lecture);
-        else if (lecture.getFile())
+        else if (lecture.isFile())
             updateFileLiveData(lecture);
     }
 

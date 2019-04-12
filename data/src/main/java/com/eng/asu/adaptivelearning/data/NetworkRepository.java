@@ -3,14 +3,15 @@ package com.eng.asu.adaptivelearning.data;
 import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
-import com.adaptivelearning.server.FancyModel.FancyQuestion;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
+import com.eng.asu.adaptivelearning.domain.StudentAnswer;
 import com.eng.asu.adaptivelearning.domain.UserService;
 import com.eng.asu.adaptivelearning.domain.UserStorage;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -179,8 +180,9 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Completable submitQuizAnswers(Long quizId, List<FancyQuestion> answers) {
-        return serviceApi.submitQuiz(authToken, quizId, answers)
+    public Completable submitQuizAnswers(Long quizId, List<StudentAnswer> answers) {
+        Gson gson = new Gson();
+        return serviceApi.submitQuiz(authToken, quizId, gson.toJson(answers))
                 .flatMapCompletable(this::completableSourceMapper);
     }
 
