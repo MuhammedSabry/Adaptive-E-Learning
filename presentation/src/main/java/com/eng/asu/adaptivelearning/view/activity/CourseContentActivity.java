@@ -1,7 +1,9 @@
 package com.eng.asu.adaptivelearning.view.activity;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +23,8 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import es.dmoral.toasty.Toasty;
@@ -28,6 +32,7 @@ import es.dmoral.toasty.Toasty;
 public class CourseContentActivity extends AppCompatActivity implements SectionsAdapter.OnLectureClickedListener, OnPreparedListener {
 
     public static final String COURSE_ID = "course_id_intent_extra";
+    private static final int REQUEST_WRITE_EXTERNAL_CODE = 51;
     private ActivityCourseContentBinding binding;
     private CourseContentViewModel viewModel;
 
@@ -53,15 +58,21 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     }
 
     private void downloadFile(FancyMediaFile mediaFile) {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mediaFile.getFileDownloadUri()))
-                .setTitle(mediaFile.getFileName())
-                .setDescription("Downloading " + mediaFile.getFileName())
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)// Visibility of the download Notification
-                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mediaFile.getFileName());
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_CODE);
+        } else {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mediaFile.getFileDownloadUri()))
+                    .setTitle(mediaFile.getFileName())
+                    .setDescription("Downloading " + mediaFile.getFileName())
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)// Visibility of the download Notification
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mediaFile.getFileName());
 
-        DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        downloadManager.enqueue(request);
+            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            downloadManager.enqueue(request);
+        }
+
 
     }
 
@@ -104,6 +115,21 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
         } else if (!lecture.isFile() && !lecture.isVideo())
             Toasty.error(this, "Invalid lecture content").show();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_WRITE_EXTERNAL_CODE:
+                if ((grantResults.length > 0)) {
+                    Toasty.info(this, "Permissions denied");
+                } else
+                    Toasty.info(this, "Permissions granted");
+                break;
+
+            default:
+                break;
+        }
     }
 
     @Override
