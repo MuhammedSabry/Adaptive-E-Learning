@@ -4,6 +4,7 @@ import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
+import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -184,6 +186,11 @@ public class NetworkRepository implements UserService,
                 quizId,
                 new QuizSubmission(answers))
                 .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Single<FancyStudentQuiz> getSubmittedQuiz(Long quizId) {
+        return serviceApi.getSubmittedQuiz(authToken, quizId);
     }
 
     public static class QuizSubmission {

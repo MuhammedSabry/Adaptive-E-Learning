@@ -5,6 +5,7 @@ import com.adaptivelearning.server.FancyModel.FancyClassroom;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
+import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.adaptivelearning.server.constants.Mapping;
 import com.adaptivelearning.server.constants.Param;
@@ -12,6 +13,7 @@ import com.adaptivelearning.server.constants.Param;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -143,4 +145,8 @@ public interface RetrofitService {
     @GET(Mapping.TEACHER_MEDIA)
     Observable<FancyMediaFile> getMedia(@Query(Param.ACCESS_TOKEN) String token,
                                         @Query(Param.FILE_ID) long mediaId);
+
+    @GET
+    Single<FancyStudentQuiz> getSubmittedQuiz(@Query(Param.ACCESS_TOKEN) String authToken,
+                                              @Query(Param.QUIZ_ID) Long quizId);
 }

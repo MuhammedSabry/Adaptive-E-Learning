@@ -9,12 +9,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
+import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
 import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ActivityQuizOverviewBinding;
 import com.eng.asu.adaptivelearning.viewmodel.QuizOverviewViewModel;
-
-import es.dmoral.toasty.Toasty;
 
 public class QuizOverviewActivity extends AppCompatActivity {
     public static final String QUIZ_ID_INTENT_EXTRA = "quiz_id";
@@ -35,6 +34,12 @@ public class QuizOverviewActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
     private void initViews() {
         disableStart();
     }
@@ -44,11 +49,24 @@ public class QuizOverviewActivity extends AppCompatActivity {
             this.quizId = getIntent().getLongExtra(QUIZ_ID_INTENT_EXTRA, 0);
 
             if (quizId != 0)
-                viewModel.getQuiz(quizId).observe(this, this::onQuizReceived);
+                getData();
             else
                 finish();
+
         } else
             finish();
+    }
+
+    private void getData() {
+        viewModel.getQuiz(quizId).observe(this, this::onQuizReceived);
+        viewModel.getSubmittedQuiz(quizId).observe(this, this::onSubmittedQuizReceived);
+    }
+
+    private void onSubmittedQuizReceived(FancyStudentQuiz fancyStudentQuiz) {
+        if (fancyStudentQuiz.getQuizId() == null)
+            return;
+        binding.attemptsCount.setText("Attempts: " + fancyStudentQuiz.getAttempts());
+        binding.bestMark.setText("Best mark: " + fancyStudentQuiz.getStudentMark() + "/" + fancyStudentQuiz.getTotalMark());
     }
 
     private void initViewModel() {
@@ -88,7 +106,6 @@ public class QuizOverviewActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
-        Toasty.error(this, "Invalid quiz id").show();
         super.finish();
     }
 }
