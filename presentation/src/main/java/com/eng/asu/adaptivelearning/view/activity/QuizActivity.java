@@ -67,7 +67,7 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
         if (quizTime.isTimeOut()) {
             this.onQuizTimeout();
         } else
-            binding.timer.setText(quizTime.getFormattedTime());
+            binding.timer.setText(quizTime.toString());
     }
 
     private void onQuizTimeout() {

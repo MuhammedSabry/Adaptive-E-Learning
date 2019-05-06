@@ -1,41 +1,33 @@
 package com.eng.asu.adaptivelearning.model;
 
+import androidx.annotation.NonNull;
+
 public class QuizTime {
     private String hour;
     private String min;
     private String second;
 
-    public QuizTime(long timeInMinutes) {
-        if (timeInMinutes < 0)
+    public QuizTime(long timeInSeconds) {
+        if (timeInSeconds < 0)
             return;
-        this.hour = String.valueOf(timeInMinutes / 60);
+        this.hour = String.valueOf(timeInSeconds / (60 * 60));
         this.hour = appendZeroes(this.hour);
-        this.min = String.valueOf(timeInMinutes % 60);
+        this.min = String.valueOf((timeInSeconds / 60) % 60);
         this.min = appendZeroes(this.min);
-        this.second = String.valueOf((timeInMinutes * 60) % 60);
+        this.second = String.valueOf(timeInSeconds % 60);
         this.second = appendZeroes(this.second);
     }
 
     private String appendZeroes(String time) {
         String returnedValue = time;
-        while (time.length() < 2)
+        while (returnedValue.length() < 2)
             returnedValue = "0".concat(returnedValue);
         return returnedValue;
     }
 
-    public String getHour() {
-        return hour;
-    }
-
-    public String getMin() {
-        return min;
-    }
-
-    public String getSecond() {
-        return second;
-    }
-
-    public String getFormattedTime() {
+    @NonNull
+    @Override
+    public String toString() {
         return this.hour + ":" + this.min + ":" + this.second;
     }
 
