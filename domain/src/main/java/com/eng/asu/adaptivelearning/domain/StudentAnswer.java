@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class StudentAnswer {
+
     @SerializedName("question_id")
     private long questionId;
 
@@ -17,5 +18,13 @@ public class StudentAnswer {
 
     public void setQuestionId(long questionId) {
         this.questionId = questionId;
+    }
+
+    public List<Long> getAnswers() {
+        return answers;
+    }
+
+    public long getQuestionId() {
+        return questionId;
     }
 }

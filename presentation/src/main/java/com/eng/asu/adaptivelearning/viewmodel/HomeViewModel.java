@@ -1,5 +1,9 @@
 package com.eng.asu.adaptivelearning.viewmodel;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.ViewModel;
+
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.domain.interactor.EnrollInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.HotCoursesInteractor;
@@ -8,20 +12,15 @@ import com.eng.asu.adaptivelearning.domain.interactor.NewCoursesInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.SaveCourseInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.SearchedCoursesInteractor;
 import com.eng.asu.adaptivelearning.model.BaseListener;
-import com.eng.asu.adaptivelearning.preferences.UserAccountStorage;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
-import androidx.lifecycle.ViewModel;
-import io.reactivex.CompletableObserver;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 public class HomeViewModel extends ViewModel {
     private final HotCoursesInteractor hotCoursesInteractor;
@@ -33,7 +32,7 @@ public class HomeViewModel extends ViewModel {
     private CompositeDisposable disposables;
 
     @Inject
-    HomeViewModel(HotCoursesInteractor hotCoursesInteractor, NewCoursesInteractor newCoursesInteractor, SearchedCoursesInteractor searchedCoursesInteractor,EnrollInteractor enrollInteractor,
+    HomeViewModel(HotCoursesInteractor hotCoursesInteractor, NewCoursesInteractor newCoursesInteractor, SearchedCoursesInteractor searchedCoursesInteractor, EnrollInteractor enrollInteractor,
                   SaveCourseInteractor saveCourseInteractor, JoinClassroomInteractor joinClassroomInteractor) {
         super();
         this.hotCoursesInteractor = hotCoursesInteractor;
@@ -48,19 +47,25 @@ public class HomeViewModel extends ViewModel {
     public LiveData<List<FancyCourse>> getNewCourses() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(5, TimeUnit.SECONDS)
-                        .flatMap(aLong -> newCoursesInteractor.execute()));
+                        .flatMap(aLong -> newCoursesInteractor.execute())
+                        .onErrorReturnItem(Collections.emptyList())
+                        .distinctUntilChanged());
     }
 
     public LiveData<List<FancyCourse>> getHotCourses() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(5, TimeUnit.SECONDS)
-                        .flatMap(aLong -> hotCoursesInteractor.execute()));
+                        .flatMap(aLong -> hotCoursesInteractor.execute())
+                        .onErrorReturnItem(Collections.emptyList())
+                        .distinctUntilChanged());
     }
 
     public LiveData<List<FancyCourse>> getCoursesByCategory(String category) {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(5, TimeUnit.SECONDS)
-                        .flatMap(aLong -> searchedCoursesInteractor.execute(category)));
+                        .flatMap(aLong -> searchedCoursesInteractor.execute(category))
+                        .onErrorReturnItem(Collections.emptyList())
+                        .distinctUntilChanged());
     }
 
     public void enrollInCourse(long courseId, BaseListener listener) {
@@ -69,13 +74,13 @@ public class HomeViewModel extends ViewModel {
                         throwable -> listener.onFail(throwable.getMessage())));
     }
 
-    public void saveCourse(long courseId, BaseListener listener){
+    public void saveCourse(long courseId, BaseListener listener) {
         disposables.add(saveCourseInteractor.execute(courseId)
                 .subscribe(() -> listener.onSuccess("Successfully saved"),
                         throwable -> listener.onFail(throwable.getMessage())));
     }
 
-    public void joinClassroom(String passcode, BaseListener listener){
+    public void joinClassroom(String passcode, BaseListener listener) {
         disposables.add(joinClassroomInteractor.execute(passcode)
                 .subscribe(() -> listener.onSuccess("Successfully joined"),
                         throwable -> listener.onFail(throwable.getMessage())));

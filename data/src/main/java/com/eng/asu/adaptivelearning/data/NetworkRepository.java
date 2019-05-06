@@ -11,7 +11,6 @@ import com.eng.asu.adaptivelearning.domain.StudentAnswer;
 import com.eng.asu.adaptivelearning.domain.UserService;
 import com.eng.asu.adaptivelearning.domain.UserStorage;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -181,9 +180,22 @@ public class NetworkRepository implements UserService,
 
     @Override
     public Completable submitQuizAnswers(Long quizId, List<StudentAnswer> answers) {
-        Gson gson = new Gson();
-        return serviceApi.submitQuiz(authToken, quizId, "{\"questions\":" + gson.toJson(answers) + "}")
+        return serviceApi.submitQuiz(authToken,
+                quizId,
+                new QuizSubmission(answers))
                 .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    public static class QuizSubmission {
+        private List<StudentAnswer> questions;
+
+        QuizSubmission(List<StudentAnswer> questions) {
+            this.questions = questions;
+        }
+
+        public List<StudentAnswer> getQuestions() {
+            return questions;
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ public class QuizTime {
     private String second;
 
     public QuizTime(long timeInMinutes) {
-        if (timeInMinutes <= 0)
+        if (timeInMinutes < 0)
             return;
         this.hour = String.valueOf(timeInMinutes / 60);
         this.hour = appendZeroes(this.hour);

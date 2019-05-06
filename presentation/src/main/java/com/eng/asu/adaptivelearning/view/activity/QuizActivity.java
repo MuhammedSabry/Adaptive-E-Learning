@@ -4,6 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
@@ -15,10 +20,6 @@ import com.eng.asu.adaptivelearning.viewmodel.QuizViewModel;
 
 import java.util.Collections;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 import es.dmoral.toasty.Toasty;
 
 public class QuizActivity extends AppCompatActivity implements BaseListener {
@@ -37,6 +38,11 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
         initDataBinding();
         initViewModel();
         initViews();
+//        validateQuizId();
+        viewModel.getQuiz(this.quizId).observe(this, this::onQuizReceived);
+    }
+
+    private void validateQuizId() {
         Intent launchingIntent = getIntent();
         long intentQuizId = 0;
         if (launchingIntent != null)
@@ -45,7 +51,6 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
             this.quizId = intentQuizId;
         else
             finish();
-        viewModel.getQuiz(this.quizId).observe(this, this::onQuizReceived);
     }
 
     private void onQuizReceived(FancyQuiz quiz) {

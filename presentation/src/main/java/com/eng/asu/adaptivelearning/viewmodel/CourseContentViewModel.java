@@ -1,5 +1,9 @@
 package com.eng.asu.adaptivelearning.viewmodel;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.MutableLiveData;
+
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyLecture;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
@@ -11,9 +15,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
-import androidx.lifecycle.MutableLiveData;
 import io.reactivex.Observable;
 
 public class CourseContentViewModel extends BaseViewModel {
@@ -39,7 +40,8 @@ public class CourseContentViewModel extends BaseViewModel {
 
     private void updateVideoData(FancyLecture lecture) {
         addDisposable(getMediaFileInteractor.execute(lecture.getLectureContentId())
-                .subscribe(videoLiveData::postValue, error -> logError("Get media file", error)));
+                .subscribe(videoLiveData::postValue,
+                        error -> logError("Get media file", error)));
     }
 
     private void getFirstVideo(List<FancySection> sections) {

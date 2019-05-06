@@ -3,24 +3,24 @@ package com.eng.asu.adaptivelearning.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.adaptivelearning.server.FancyModel.FancyQuiz;
-import com.eng.asu.adaptivelearning.LearningApplication;
-import com.eng.asu.adaptivelearning.R;
-import com.eng.asu.adaptivelearning.databinding.ActivityQuizOverviewBinding;
-import com.eng.asu.adaptivelearning.model.BaseListener;
-import com.eng.asu.adaptivelearning.viewmodel.QuizOverviewViewModel;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.adaptivelearning.server.FancyModel.FancyQuiz;
+import com.eng.asu.adaptivelearning.LearningApplication;
+import com.eng.asu.adaptivelearning.R;
+import com.eng.asu.adaptivelearning.databinding.ActivityQuizOverviewBinding;
+import com.eng.asu.adaptivelearning.viewmodel.QuizOverviewViewModel;
+
 import es.dmoral.toasty.Toasty;
 
 public class QuizOverviewActivity extends AppCompatActivity {
     public static final String QUIZ_ID_INTENT_EXTRA = "quiz_id";
     private ActivityQuizOverviewBinding binding;
-    private QuizOverviewViewModel viewModel;
     private long quizId = 0;
+    private QuizOverviewViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,8 +29,17 @@ public class QuizOverviewActivity extends AppCompatActivity {
     }
 
     private void initActivity() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_quiz_overview);
-        viewModel = ViewModelProviders.of(this, LearningApplication.getViewModelFactory()).get(QuizOverviewViewModel.class);
+        initDataBinding();
+        initViewModel();
+        validateQuizId();
+        initViews();
+    }
+
+    private void initViews() {
+        disableStart();
+    }
+
+    private void validateQuizId() {
         if (getIntent() != null) {
             this.quizId = getIntent().getLongExtra(QUIZ_ID_INTENT_EXTRA, 0);
 
@@ -40,7 +49,14 @@ public class QuizOverviewActivity extends AppCompatActivity {
                 finish();
         } else
             finish();
-        binding.start.setEnabled(false);
+    }
+
+    private void initViewModel() {
+        viewModel = ViewModelProviders.of(this, LearningApplication.getViewModelFactory()).get(QuizOverviewViewModel.class);
+    }
+
+    private void initDataBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_quiz_overview);
     }
 
     private void onQuizReceived(FancyQuiz quiz) {
@@ -48,7 +64,7 @@ public class QuizOverviewActivity extends AppCompatActivity {
             finish();
             return;
         }
-        binding.start.setEnabled(true);
+        enableStart();
         binding.quizInstructions.setText(quiz.getInstructions());
         binding.time.setText(getString(R.string.quiz_time_in_minutes, quiz.getTime()));
         binding.title.setText(quiz.getTitle());
@@ -56,25 +72,18 @@ public class QuizOverviewActivity extends AppCompatActivity {
         binding.start.setOnClickListener(v -> this.onStartQuizClicked());
     }
 
+    private void enableStart() {
+        binding.start.setEnabled(true);
+    }
+
+    private void disableStart() {
+        binding.start.setEnabled(false);
+    }
+
     private void onStartQuizClicked() {
-        viewModel.startQuiz(quizId, new BaseListener() {
-            @Override
-            public void onSuccess(String message) {
-                Intent intent = new Intent(QuizOverviewActivity.this, QuizActivity.class);
-                intent.putExtra(QUIZ_ID_INTENT_EXTRA, quizId);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFail(String message) {
-                Toasty.error(QuizOverviewActivity.this, message).show();
-            }
-
-            @Override
-            public void onFallBack() {
-
-            }
-        });
+        Intent intent = new Intent(QuizOverviewActivity.this, QuizActivity.class);
+        intent.putExtra(QUIZ_ID_INTENT_EXTRA, quizId);
+        startActivity(intent);
     }
 
     @Override

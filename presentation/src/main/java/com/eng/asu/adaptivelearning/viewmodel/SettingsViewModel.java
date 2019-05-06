@@ -1,13 +1,13 @@
 package com.eng.asu.adaptivelearning.viewmodel;
 
-import javax.inject.Inject;
-
 import androidx.lifecycle.ViewModel;
+
+import javax.inject.Inject;
 
 public class SettingsViewModel extends ViewModel {
 
     @Inject
-    public SettingsViewModel() {
+    SettingsViewModel() {
         super();
     }
 }

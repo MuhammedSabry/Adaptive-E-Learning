@@ -8,6 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyLecture;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
@@ -21,12 +29,6 @@ import com.eng.asu.adaptivelearning.viewmodel.CourseContentViewModel;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 import es.dmoral.toasty.Toasty;
 
 public class CourseContentActivity extends AppCompatActivity implements SectionsAdapter.OnLectureClickedListener, OnPreparedListener {
@@ -45,16 +47,32 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     private void initActivity() {
         initDataBinding();
         initViewModel();
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        binding.videoView.setOnPreparedListener(this);
+        initViews();
+
         viewModel.getVideoLiveData().observe(this, this::playVideo);
         viewModel.getFilesLiveData().observe(this, this::downloadFile);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
 
         if (extras != null && !extras.isEmpty())
             viewModel.getCourseContent(extras.getLong(COURSE_ID)).observe(this, this::initViews);
         else
             closeActivity();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            binding.videoView.pause();
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    private void initViews() {
+        binding.videoView.setOnPreparedListener(this);
+        binding.videoView.setOnCompletionListener(() -> binding.videoView.reset());
     }
 
     private void downloadFile(FancyMediaFile mediaFile) {
@@ -72,7 +90,6 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);
         }
-
 
     }
 
@@ -118,17 +135,14 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_WRITE_EXTERNAL_CODE:
-                if ((grantResults.length > 0)) {
-                    Toasty.info(this, "Permissions denied");
-                } else
-                    Toasty.info(this, "Permissions granted");
-                break;
-
-            default:
-                break;
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_WRITE_EXTERNAL_CODE) {
+            if ((grantResults.length > 0)) {
+                Toasty.info(this, "Permissions denied").show();
+            } else
+                Toasty.info(this, "Permissions granted").show();
         }
     }
 
