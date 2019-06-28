@@ -38,8 +38,8 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
         initDataBinding();
         initViewModel();
         initViews();
-//        validateQuizId();
-        viewModel.getQuiz(this.quizId).observe(this, this::onQuizReceived);
+        validateQuizId();
+        viewModel.startQuiz(this.quizId).observe(this, this::onQuizReceived);
     }
 
     private void validateQuizId() {
@@ -64,9 +64,9 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
     }
 
     private void setTime(QuizTime quizTime) {
-        if (quizTime.isTimeOut()) {
+        if (quizTime.isTimeOut())
             this.onQuizTimeout();
-        } else
+        else
             binding.timer.setText(quizTime.toString());
     }
 
@@ -74,12 +74,6 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
         Toasty.info(this, "Quiz timeout,quiz will auto submit now").show();
         binding.submit.setEnabled(false);
         viewModel.submitQuiz(questionsAdapter.getAnswers(), this);
-    }
-
-    @Override
-    public void finish() {
-        Toasty.error(this, "Error getting quiz data").show();
-        super.finish();
     }
 
     private void initViewModel() {

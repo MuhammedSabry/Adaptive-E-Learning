@@ -175,9 +175,8 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Completable startQuiz(Long quizID) {
-        return serviceApi.startQuiz(authToken, quizID)
-                .flatMapCompletable(this::completableSourceMapper);
+    public Single<FancyQuiz> startQuiz(Long quizID) {
+        return serviceApi.startQuiz(authToken, quizID);
     }
 
     @Override

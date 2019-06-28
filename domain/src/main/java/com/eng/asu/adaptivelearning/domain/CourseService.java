@@ -24,7 +24,7 @@ public interface CourseService {
 
     Observable<FancyQuiz> getQuiz(Long quizId);
 
-    Completable startQuiz(Long quizID);
+    Single<FancyQuiz> startQuiz(Long quizID);
 
     Completable submitQuizAnswers(Long quizId, List<StudentAnswer> answers);
 

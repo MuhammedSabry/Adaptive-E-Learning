@@ -78,16 +78,14 @@ public class QuizOverviewActivity extends AppCompatActivity {
     }
 
     private void onQuizReceived(FancyQuiz quiz) {
-        if (quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
-            finish();
-            return;
-        }
         enableStart();
         binding.quizInstructions.setText(quiz.getInstructions());
         binding.time.setText(getString(R.string.quiz_time_in_minutes, quiz.getTime()));
         binding.title.setText(quiz.getTitle());
         binding.totalMark.setText(getString(R.string.quiz_total_marks, quiz.getTotalMark()));
         binding.start.setOnClickListener(v -> this.onStartQuizClicked());
+        if (quiz.getNo_of_questions() == 0)
+            disableStart();
     }
 
     private void enableStart() {

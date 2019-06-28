@@ -1,15 +1,16 @@
 package com.eng.asu.adaptivelearning.domain.interactor;
 
+import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.eng.asu.adaptivelearning.domain.CourseService;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.BackgroundExecutionThread;
-import com.eng.asu.adaptivelearning.domain.interactor.usecase.CompletableUseCase;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.PostExecutionThread;
+import com.eng.asu.adaptivelearning.domain.interactor.usecase.SingleUseCase;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
+import io.reactivex.Single;
 
-public class StartQuizInteractor extends CompletableUseCase<Long> {
+public class StartQuizInteractor extends SingleUseCase<FancyQuiz, Long> {
     private final CourseService courseService;
 
     @Inject
@@ -19,7 +20,7 @@ public class StartQuizInteractor extends CompletableUseCase<Long> {
     }
 
     @Override
-    protected Completable interact(Long quizId) {
+    protected Single<FancyQuiz> interact(Long quizId) {
         return courseService.startQuiz(quizId);
     }
 }

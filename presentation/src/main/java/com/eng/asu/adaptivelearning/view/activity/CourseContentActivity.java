@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,15 +65,16 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     protected void onPause() {
         super.onPause();
         try {
-            binding.videoView.pause();
+            binding.videoView.stopPlayback();
         } catch (Exception ignored) {
 
         }
     }
 
     private void initViews() {
+        binding.videoView.setVisibility(View.GONE);
         binding.videoView.setOnPreparedListener(this);
-        binding.videoView.setOnCompletionListener(() -> binding.videoView.reset());
+        binding.videoView.setOnCompletionListener(() -> binding.videoView.stopPlayback());
     }
 
     private void downloadFile(FancyMediaFile mediaFile) {
@@ -100,12 +102,12 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
         if (sections.isEmpty())
             closeActivity();
         else
-
             binding.sectionsList.setAdapter(new SectionsAdapter(this, sections, this));
 
     }
 
     private void playVideo(FancyMediaFile fancyMediaFile) {
+        binding.videoView.setVisibility(View.VISIBLE);
         binding.videoView.setVideoURI(Uri.parse(fancyMediaFile.getFileDownloadUri()));
     }
 

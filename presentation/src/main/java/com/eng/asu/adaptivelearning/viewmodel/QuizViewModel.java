@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.eng.asu.adaptivelearning.domain.StudentAnswer;
-import com.eng.asu.adaptivelearning.domain.interactor.GetQuizInteractor;
+import com.eng.asu.adaptivelearning.domain.interactor.StartQuizInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.SubmitQuizInteractor;
 import com.eng.asu.adaptivelearning.model.BaseListener;
 import com.eng.asu.adaptivelearning.model.QuizTime;
@@ -20,19 +20,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class QuizViewModel extends BaseViewModel {
-    private final GetQuizInteractor getQuizInteractor;
+    private final StartQuizInteractor startQuizInteractor;
     private final SubmitQuizInteractor submitQuizInteractor;
     private FancyQuiz quiz;
 
     @Inject
-    QuizViewModel(GetQuizInteractor getQuizInteractor, SubmitQuizInteractor submitQuizInteractor) {
-        this.getQuizInteractor = getQuizInteractor;
+    QuizViewModel(StartQuizInteractor startQuizInteractor, SubmitQuizInteractor submitQuizInteractor) {
+        this.startQuizInteractor = startQuizInteractor;
         this.submitQuizInteractor = submitQuizInteractor;
     }
 
-    public LiveData<FancyQuiz> getQuiz(long quizId) {
+    public LiveData<FancyQuiz> startQuiz(long quizId) {
         FancyQuiz onErrorQuiz = new FancyQuiz();
-        return LiveDataReactiveStreams.fromPublisher(getQuizInteractor.execute(quizId)
+        return LiveDataReactiveStreams.fromPublisher(startQuizInteractor.execute(quizId)
                 .onErrorReturnItem(onErrorQuiz)
                 .doOnSuccess(fancyQuiz -> this.quiz = fancyQuiz)
                 .toFlowable());
