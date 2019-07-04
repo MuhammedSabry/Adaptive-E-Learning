@@ -128,7 +128,7 @@ public interface RetrofitService {
     @GET(Mapping.STUDENT_CLASSROOMS)
     Observable<List<FancyClassroom>> getStudentClassrooms(@Query(Param.ACCESS_TOKEN) String token);
 
-    @GET("student/quiz/info")
+    @GET(Mapping.STUDENT_QUIZ_INFO)
     Observable<FancyQuiz> getQuiz(@Query(Param.ACCESS_TOKEN) String token,
                                   @Query(Param.QUIZ_ID) long quizId);
 
@@ -146,7 +146,7 @@ public interface RetrofitService {
     Observable<FancyMediaFile> getMedia(@Query(Param.ACCESS_TOKEN) String token,
                                         @Query(Param.FILE_ID) long mediaId);
 
-    @GET("student/quiz/score")
+    @GET(Mapping.STUDENT_QUIZ_SCORE)
     Single<FancyStudentQuiz> getSubmittedQuiz(@Query(Param.ACCESS_TOKEN) String authToken,
                                               @Query(Param.QUIZ_ID) Long quizId);
 }

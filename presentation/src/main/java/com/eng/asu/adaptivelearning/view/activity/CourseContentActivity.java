@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyLecture;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
+import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancySection;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
 import com.eng.asu.adaptivelearning.LearningApplication;
@@ -126,14 +127,16 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
     @Override
     public void onLectureClicked(FancyLecture lecture) {
         viewModel.onLectureClicked(lecture);
-
-        if (lecture.isQuiz()) {
-            Intent quizOverViewIntent = new Intent(this, QuizOverviewActivity.class);
-            quizOverViewIntent.putExtra(QuizOverviewActivity.QUIZ_ID_INTENT_EXTRA, lecture.getLectureContentId());
-            startActivity(quizOverViewIntent);
-        } else if (!lecture.isFile() && !lecture.isVideo())
+        if (!lecture.isFile() && !lecture.isVideo())
             Toasty.error(this, "Invalid lecture content").show();
 
+    }
+
+    @Override
+    public void onQuizClicked(FancyQuiz quiz) {
+        Intent quizOverViewIntent = new Intent(this, QuizOverviewActivity.class);
+        quizOverViewIntent.putExtra(QuizOverviewActivity.QUIZ_ID_INTENT_EXTRA, quiz.getQuizId());
+        startActivity(quizOverViewIntent);
     }
 
     @Override

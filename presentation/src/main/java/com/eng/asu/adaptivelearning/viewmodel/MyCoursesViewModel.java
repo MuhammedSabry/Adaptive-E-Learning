@@ -53,7 +53,7 @@ public class MyCoursesViewModel extends ViewModel {
 
     public LiveData<FancyCourse> getCourse(long courseId) {
         return LiveDataReactiveStreams.fromPublisher(getCourseById.execute(courseId)
-                .onErrorReturnItem(new FancyCourse()));
+                .onErrorReturnItem(new FancyCourse(null)));
     }
 
 }

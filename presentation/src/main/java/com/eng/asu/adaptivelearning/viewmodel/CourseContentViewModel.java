@@ -34,7 +34,7 @@ public class CourseContentViewModel extends BaseViewModel {
 
     public LiveData<FancyCourse> getCourseContent(long courseId) {
         return LiveDataReactiveStreams.fromPublisher(getCourseByIdInteractor.execute(courseId)
-                .onErrorReturnItem(new FancyCourse())
+                .onErrorReturnItem(new FancyCourse(null))
                 .doOnNext(course -> this.getFirstVideo(course.getSections())));
     }
 

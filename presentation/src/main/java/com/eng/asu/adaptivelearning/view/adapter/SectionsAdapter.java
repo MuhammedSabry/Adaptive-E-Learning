@@ -7,15 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.adaptivelearning.server.FancyModel.FancyLecture;
+import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancySection;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ItemviewLectureBinding;
 import com.eng.asu.adaptivelearning.databinding.ItemviewSectionBinding;
 
 import java.util.List;
-
-import androidx.databinding.DataBindingUtil;
 
 public class SectionsAdapter extends BaseExpandableListAdapter {
 
@@ -36,7 +37,8 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return sections.get(groupPosition).getFancyLectures().size();
+        FancySection fancySection = sections.get(groupPosition);
+        return fancySection.getFancyLectures().size() + (fancySection.getFancyQuiz() != null ? 1 : 0);
     }
 
     @Override
@@ -45,8 +47,9 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public FancyLecture getChild(int groupPosition, int childPosition) {
-        return sections.get(groupPosition).getFancyLectures().get(childPosition);
+    public Object getChild(int groupPosition, int childPosition) {
+        FancySection section = sections.get(groupPosition);
+        return childPosition == section.getFancyLectures().size() ? section.getFancyQuiz() : section.getFancyLectures().get(childPosition);
     }
 
     @Override
@@ -56,7 +59,8 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return sections.get(groupPosition).getFancyLectures().get(childPosition).getLectureId();
+        FancySection section = sections.get(groupPosition);
+        return childPosition == section.getFancyLectures().size() ? section.getFancyQuiz().getQuizId() : section.getFancyLectures().get(childPosition).getLectureId();
     }
 
     @Override
@@ -78,9 +82,13 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
         ItemviewLectureBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.itemview_lecture, parent, false);
 
-        FancyLecture lecture = sections.get(groupPosition).getFancyLectures().get(childPosition);
-
-        bindLecture(lecture, childPosition, groupPosition, binding);
+        FancySection section = sections.get(groupPosition);
+        if (childPosition == section.getFancyLectures().size()) {
+            bindLecture(null, childPosition, groupPosition, binding, section.getFancyQuiz());
+        } else {
+            FancyLecture lecture = section.getFancyLectures().get(childPosition);
+            bindLecture(lecture, childPosition, groupPosition, binding, null);
+        }
 
         return binding.getRoot();
     }
@@ -91,28 +99,34 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
     }
 
     @SuppressLint("SetTextI18n")
-    private void bindLecture(FancyLecture lecture, int childPosition, int parentPosition, ItemviewLectureBinding binding) {
+    private void bindLecture(FancyLecture lecture, int childPosition, int parentPosition, ItemviewLectureBinding binding, FancyQuiz quiz) {
         int lectureNumber = childPosition + 1;
 
-        for (int i = 0; i < parentPosition; i++)
-            lectureNumber += sections.get(i).getFancyLectures().size();
+        for (int i = 0; i < parentPosition; i++) {
+            FancySection section = sections.get(i);
+            lectureNumber += section.getFancyLectures().size() + (section.getFancyQuiz() != null ? 1 : 0);
+        }
 
         binding.position.setText(String.valueOf(lectureNumber));
-        binding.title.setText(lecture.getName());
 
-        if (lecture.isQuiz()) {
+        if (quiz != null) {
             binding.type.setImageResource(R.drawable.ic_quiz);
             binding.button.setText("Take Quiz");
-        } else if (lecture.isFile()) {
-            binding.type.setImageResource(R.drawable.ic_file);
-            binding.button.setText("Download");
-        } else if (lecture.isVideo()) {
-            binding.type.setImageResource(R.drawable.ic_video);
-            binding.button.setText("Play");
+            binding.title.setText(quiz.getTitle());
+            binding.button.setOnClickListener(v -> listener.onQuizClicked(quiz));
         } else {
-            binding.button.setText("Unknown");
+            binding.title.setText(lecture.getName());
+            if (lecture.isFile()) {
+                binding.type.setImageResource(R.drawable.ic_file);
+                binding.button.setText("Download");
+            } else if (lecture.isVideo()) {
+                binding.type.setImageResource(R.drawable.ic_video);
+                binding.button.setText("Play");
+            } else {
+                binding.button.setText("Unknown");
+            }
+            binding.button.setOnClickListener(v -> listener.onLectureClicked(lecture));
         }
-        binding.button.setOnClickListener(v -> listener.onLectureClicked(lecture));
     }
 
     @Override
@@ -122,5 +136,7 @@ public class SectionsAdapter extends BaseExpandableListAdapter {
 
     public interface OnLectureClickedListener {
         void onLectureClicked(FancyLecture lecture);
+
+        void onQuizClicked(FancyQuiz quiz);
     }
 }

@@ -33,8 +33,6 @@ public class GetCourseById extends FlowableUseCase<FancyCourse, Long> {
                                         .map(lecture -> {
                                             if (lecture.isVideo() == null)
                                                 lecture.setVideo(false);
-                                            if (lecture.isQuiz() == null)
-                                                lecture.setQuiz(false);
                                             if (lecture.isFile() == null)
                                                 lecture.setFile(false);
                                             return lecture;
