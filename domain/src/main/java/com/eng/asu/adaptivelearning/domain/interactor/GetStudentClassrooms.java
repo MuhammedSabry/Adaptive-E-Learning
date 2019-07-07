@@ -1,10 +1,10 @@
 package com.eng.asu.adaptivelearning.domain.interactor;
 
-import com.adaptivelearning.server.Model.Classroom;
 import com.eng.asu.adaptivelearning.domain.UserService;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.BackgroundExecutionThread;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.FlowableUseCase;
 import com.eng.asu.adaptivelearning.domain.interactor.usecase.PostExecutionThread;
+import com.eng.asu.adaptivelearning.domain.model.Classroom;
 
 import java.util.List;
 

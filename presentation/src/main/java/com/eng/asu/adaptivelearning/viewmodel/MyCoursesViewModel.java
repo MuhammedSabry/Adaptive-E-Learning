@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
-import com.adaptivelearning.server.Model.Classroom;
 import com.eng.asu.adaptivelearning.domain.interactor.GetCourseById;
 import com.eng.asu.adaptivelearning.domain.interactor.GetEnrolledCourses;
 import com.eng.asu.adaptivelearning.domain.interactor.GetStudentClassrooms;
 import com.eng.asu.adaptivelearning.domain.interactor.JoinClassroomInteractor;
+import com.eng.asu.adaptivelearning.domain.model.Classroom;
 import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.Collections;

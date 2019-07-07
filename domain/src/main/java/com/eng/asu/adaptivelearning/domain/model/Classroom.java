@@ -6,7 +6,7 @@ import com.adaptivelearning.server.FancyModel.FancyUser;
 
 import java.util.List;
 
-public class ClassRoom {
+public class Classroom {
     private Long classroomId;
     private FancyUser creator;
     private String classroomName;
@@ -16,7 +16,7 @@ public class ClassRoom {
     private List<FancyCourse> courses;
     private FancyMediaFile classroom_picture;
 
-    public ClassRoom() {
+    public Classroom() {
     }
 
     public Long getClassroomId() {

@@ -5,9 +5,9 @@ import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
-import com.adaptivelearning.server.Model.Classroom;
 import com.adaptivelearning.server.constants.Mapping;
 import com.adaptivelearning.server.constants.Param;
+import com.eng.asu.adaptivelearning.domain.model.Classroom;
 import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.List;

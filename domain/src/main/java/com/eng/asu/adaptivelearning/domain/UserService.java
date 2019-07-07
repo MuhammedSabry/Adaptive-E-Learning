@@ -1,7 +1,7 @@
 package com.eng.asu.adaptivelearning.domain;
 
 import com.adaptivelearning.server.FancyModel.FancyUser;
-import com.adaptivelearning.server.Model.Classroom;
+import com.eng.asu.adaptivelearning.domain.model.Classroom;
 import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.List;

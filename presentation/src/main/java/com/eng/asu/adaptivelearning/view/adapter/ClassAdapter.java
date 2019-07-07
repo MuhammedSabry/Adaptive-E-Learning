@@ -8,9 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.adaptivelearning.server.Model.Classroom;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ItemviewClassroomBinding;
+import com.eng.asu.adaptivelearning.domain.model.Classroom;
 
 import java.util.List;
 
