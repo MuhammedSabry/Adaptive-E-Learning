@@ -1,9 +1,9 @@
 package com.eng.asu.adaptivelearning.domain;
 
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.List;
 
@@ -12,13 +12,13 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface CourseService {
-    Observable<List<FancyCourse>> getHotCourses();
+    Observable<List<Course>> getHotCourses();
 
-    Observable<List<FancyCourse>> getNewCourses();
+    Observable<List<Course>> getNewCourses();
 
-    Observable<List<FancyCourse>> getCoursesByCategory(String category);
+    Observable<List<Course>> getCoursesByCategory(String category);
 
-    Observable<FancyCourse> getCourse(Long courseId);
+    Observable<Course> getCourse(Long courseId);
 
     Observable<FancyMediaFile> getMediaFile(Long mediaContentId);
 

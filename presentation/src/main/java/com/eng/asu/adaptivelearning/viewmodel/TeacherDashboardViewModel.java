@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
-import com.adaptivelearning.server.FancyModel.FancyClassroom;
-import com.adaptivelearning.server.FancyModel.FancyCourse;
+import com.adaptivelearning.server.Model.Classroom;
 import com.eng.asu.adaptivelearning.domain.interactor.GetTeacherClassrooms;
 import com.eng.asu.adaptivelearning.domain.interactor.GetTeacherCourses;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,14 +30,14 @@ public class TeacherDashboardViewModel extends ViewModel {
         this.getTeacherClassrooms = getTeacherClassrooms;
     }
 
-    public LiveData<List<FancyCourse>> getTeacherCourses() {
+    public LiveData<List<Course>> getTeacherCourses() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(10, TimeUnit.SECONDS)
                         .flatMap(aLong -> getTeacherCourses.execute())
                         .onErrorReturnItem(Collections.emptyList()));
     }
 
-    public LiveData<List<FancyClassroom>> getTeacherClassrooms() {
+    public LiveData<List<Classroom>> getTeacherClassrooms() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(10, TimeUnit.SECONDS)
                         .flatMap(aLong -> getTeacherClassrooms.execute()));

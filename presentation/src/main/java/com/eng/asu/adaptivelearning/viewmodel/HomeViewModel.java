@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.domain.interactor.EnrollInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.HotCoursesInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.JoinClassroomInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.NewCoursesInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.SaveCourseInteractor;
 import com.eng.asu.adaptivelearning.domain.interactor.SearchedCoursesInteractor;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 import com.eng.asu.adaptivelearning.model.BaseListener;
 
 import java.util.Collections;
@@ -44,7 +44,7 @@ public class HomeViewModel extends ViewModel {
         this.joinClassroomInteractor = joinClassroomInteractor;
     }
 
-    public LiveData<List<FancyCourse>> getNewCourses() {
+    public LiveData<List<Course>> getNewCourses() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(5, TimeUnit.SECONDS)
                         .flatMap(aLong -> newCoursesInteractor.execute())
@@ -52,7 +52,7 @@ public class HomeViewModel extends ViewModel {
                         .distinctUntilChanged());
     }
 
-    public LiveData<List<FancyCourse>> getHotCourses() {
+    public LiveData<List<Course>> getHotCourses() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(5, TimeUnit.SECONDS)
                         .flatMap(aLong -> hotCoursesInteractor.execute())
@@ -60,7 +60,7 @@ public class HomeViewModel extends ViewModel {
                         .distinctUntilChanged());
     }
 
-    public LiveData<List<FancyCourse>> getCoursesByCategory(String category) {
+    public LiveData<List<Course>> getCoursesByCategory(String category) {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(5, TimeUnit.SECONDS)
                         .flatMap(aLong -> searchedCoursesInteractor.execute(category))

@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyLecture;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
@@ -26,6 +25,7 @@ import com.devbrackets.android.exomedia.listener.OnPreparedListener;
 import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ActivityCourseContentBinding;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 import com.eng.asu.adaptivelearning.view.adapter.SectionsAdapter;
 import com.eng.asu.adaptivelearning.viewmodel.CourseContentViewModel;
 
@@ -96,9 +96,9 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
 
     }
 
-    private void initViews(FancyCourse fancyCourse) {
-        setTitle(fancyCourse.getTitle());
-        List<FancySection> sections = fancyCourse.getSections();
+    private void initViews(Course course) {
+        setTitle(course.getTitle());
+        List<FancySection> sections = course.getSections();
 
         if (sections.isEmpty())
             closeActivity();

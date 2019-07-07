@@ -5,44 +5,43 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.adaptivelearning.server.FancyModel.FancyCourse;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ItemviewCourseBinding;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 import com.eng.asu.adaptivelearning.model.BaseListener;
 import com.eng.asu.adaptivelearning.view.activity.CourseInfo;
 import com.eng.asu.adaptivelearning.viewmodel.HomeViewModel;
 import com.eng.asu.adaptivelearning.viewmodel.SavedCoursesViewModel;
 
 import java.util.List;
-import java.util.Random;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
 import es.dmoral.toasty.Toasty;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder> {
 
     private Context context;
-    private List<FancyCourse> courses;
+    private List<Course> courses;
     private HomeViewModel homeViewModel;
     private SavedCoursesViewModel savedCoursesViewModel;
 
-    public CoursesAdapter(Context context, List<FancyCourse> courses, HomeViewModel viewModel) {
+    public CoursesAdapter(Context context, List<Course> courses, HomeViewModel viewModel) {
         this.context = context;
         this.courses = courses;
         this.homeViewModel = viewModel;
     }
 
-    public CoursesAdapter(Context context, List<FancyCourse> courses, SavedCoursesViewModel savedCoursesViewModel) {
+    public CoursesAdapter(Context context, List<Course> courses, SavedCoursesViewModel savedCoursesViewModel) {
         this.context = context;
         this.courses = courses;
         this.savedCoursesViewModel = savedCoursesViewModel;
     }
 
-    public void setCourses(List<FancyCourse> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
         notifyDataSetChanged();
     }
@@ -89,7 +88,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             }
         }
 
-        void bind(FancyCourse course) {
+        void bind(Course course) {
             binding.courseName.setText(course.getTitle());
             binding.courseInstructor.setText(course.getPublisher().getFirstName());
             binding.courseInstructor.setText(course.getDetailedTitle());
@@ -108,7 +107,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
             }
         }
 
-        private void enrollInCourse(FancyCourse course) {
+        private void enrollInCourse(Course course) {
             binding.enrollButton.setEnabled(false);
             homeViewModel.enrollInCourse(course.getCourseId(), new BaseListener() {
                 @Override

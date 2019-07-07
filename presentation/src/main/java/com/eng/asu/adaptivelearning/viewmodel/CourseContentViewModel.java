@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyLecture;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancySection;
 import com.eng.asu.adaptivelearning.domain.interactor.GetCourseById;
 import com.eng.asu.adaptivelearning.domain.interactor.GetMediaFile;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.List;
 
@@ -32,9 +32,9 @@ public class CourseContentViewModel extends BaseViewModel {
         this.filesLiveData = new MutableLiveData<>();
     }
 
-    public LiveData<FancyCourse> getCourseContent(long courseId) {
+    public LiveData<Course> getCourseContent(long courseId) {
         return LiveDataReactiveStreams.fromPublisher(getCourseByIdInteractor.execute(courseId)
-                .onErrorReturnItem(new FancyCourse(null))
+                .onErrorReturnItem(new Course())
                 .doOnNext(course -> this.getFirstVideo(course.getSections())));
     }
 

@@ -1,17 +1,19 @@
 package com.eng.asu.adaptivelearning.data;
 
-import com.adaptivelearning.server.FancyModel.FancyClassroom;
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
+import com.adaptivelearning.server.Model.Classroom;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
 import com.eng.asu.adaptivelearning.domain.StudentAnswer;
 import com.eng.asu.adaptivelearning.domain.UserService;
 import com.eng.asu.adaptivelearning.domain.UserStorage;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,7 +62,9 @@ public class NetworkRepository implements UserService,
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                        .create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
@@ -103,12 +107,12 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<List<FancyCourse>> getSavedCourses() {
+    public Observable<List<Course>> getSavedCourses() {
         return serviceApi.getSavedCourses(authToken);
     }
 
     @Override
-    public Observable<List<FancyCourse>> getStudentCourses() {
+    public Observable<List<Course>> getStudentCourses() {
         return serviceApi.getStudentCourses(authToken);
     }
 
@@ -118,7 +122,7 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<List<FancyCourse>> getTeacherCourses() {
+    public Observable<List<Course>> getTeacherCourses() {
         return serviceApi.getTeacherCourses(authToken);
     }
 
@@ -129,12 +133,12 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<List<FancyClassroom>> getTeacherClassrooms() {
+    public Observable<List<Classroom>> getTeacherClassrooms() {
         return serviceApi.getTeacherClassrooms(authToken);
     }
 
     @Override
-    public Observable<List<FancyClassroom>> getStudentClassrooms() {
+    public Observable<List<Classroom>> getStudentClassrooms() {
         return serviceApi.getStudentClassrooms(authToken);
     }
 
@@ -145,22 +149,22 @@ public class NetworkRepository implements UserService,
     }
 
     @Override
-    public Observable<List<FancyCourse>> getHotCourses() {
+    public Observable<List<Course>> getHotCourses() {
         return serviceApi.getHotCourses();
     }
 
     @Override
-    public Observable<List<FancyCourse>> getNewCourses() {
+    public Observable<List<Course>> getNewCourses() {
         return serviceApi.getNewCourses();
     }
 
     @Override
-    public Observable<List<FancyCourse>> getCoursesByCategory(String category) {
+    public Observable<List<Course>> getCoursesByCategory(String category) {
         return serviceApi.getCoursesByCategory(category);
     }
 
     @Override
-    public Observable<FancyCourse> getCourse(Long courseId) {
+    public Observable<Course> getCourse(Long courseId) {
         return serviceApi.getCourse(authToken, courseId);
     }
 

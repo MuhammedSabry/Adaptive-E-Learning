@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
-import com.adaptivelearning.server.FancyModel.FancyClassroom;
-import com.adaptivelearning.server.FancyModel.FancyCourse;
+import com.adaptivelearning.server.Model.Classroom;
 import com.eng.asu.adaptivelearning.domain.interactor.GetCourseById;
 import com.eng.asu.adaptivelearning.domain.interactor.GetEnrolledCourses;
 import com.eng.asu.adaptivelearning.domain.interactor.GetStudentClassrooms;
 import com.eng.asu.adaptivelearning.domain.interactor.JoinClassroomInteractor;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,14 +36,14 @@ public class MyCoursesViewModel extends ViewModel {
         this.getCourseById = getCourseById;
     }
 
-    public LiveData<List<FancyCourse>> getUserCourses() {
+    public LiveData<List<Course>> getUserCourses() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(10, TimeUnit.SECONDS)
                         .flatMap(aLong -> getEnrolledCourses.execute())
                         .onErrorReturnItem(Collections.emptyList()));
     }
 
-    public LiveData<List<FancyClassroom>> getStudentClassrooms() {
+    public LiveData<List<Classroom>> getStudentClassrooms() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(10, TimeUnit.SECONDS)
                         .flatMap(aLong -> getStudentClassrooms.execute())
@@ -51,9 +51,9 @@ public class MyCoursesViewModel extends ViewModel {
                         .onErrorReturnItem(Collections.emptyList()));
     }
 
-    public LiveData<FancyCourse> getCourse(long courseId) {
+    public LiveData<Course> getCourse(long courseId) {
         return LiveDataReactiveStreams.fromPublisher(getCourseById.execute(courseId)
-                .onErrorReturnItem(new FancyCourse(null)));
+                .onErrorReturnItem(new Course()));
     }
 
 }

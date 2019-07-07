@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.eng.asu.adaptivelearning.domain.interactor.GetSavedCourses;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +21,7 @@ public class SavedCoursesViewModel extends ViewModel {
         this.getSavedCourses = getSavedCourses;
     }
 
-    public LiveData<List<FancyCourse>> getSavedCourses() {
+    public LiveData<List<Course>> getSavedCourses() {
         return LiveDataReactiveStreams.fromPublisher(getSavedCourses.execute()
                 .onErrorReturnItem(Collections.emptyList()));
     }

@@ -1,14 +1,14 @@
 package com.eng.asu.adaptivelearning.data;
 
 import com.adaptivelearning.server.FancyModel.FancyCategory;
-import com.adaptivelearning.server.FancyModel.FancyClassroom;
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyQuiz;
 import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
+import com.adaptivelearning.server.Model.Classroom;
 import com.adaptivelearning.server.constants.Mapping;
 import com.adaptivelearning.server.constants.Param;
+import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.List;
 
@@ -53,27 +53,27 @@ public interface RetrofitService {
     Observable<Response<ResponseBody>> removeSavedCourse(@Query(Param.COURSE_ID) int courseId);
 
     @GET(Mapping.SAVED_COURSES)
-    Observable<List<FancyCourse>> getSavedCourses(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<List<Course>> getSavedCourses(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.COURSE)
-    Observable<FancyCourse> getCourse(@Query(Param.ACCESS_TOKEN) String token,
-                                      @Query(Param.COURSE_ID) Long courseId);
+    Observable<Course> getCourse(@Query(Param.ACCESS_TOKEN) String token,
+                                 @Query(Param.COURSE_ID) Long courseId);
 
     //General APIs
     @GET(Mapping.NEW_COURSES)
-    Observable<List<FancyCourse>> getNewCourses();
+    Observable<List<Course>> getNewCourses();
 
     @GET(Mapping.HOT_COURSES)
-    Observable<List<FancyCourse>> getHotCourses();
+    Observable<List<Course>> getHotCourses();
 
     @GET(Mapping.TOP_RATED_COURSES)
-    Observable<List<FancyCourse>> getTopRatedCourses();
+    Observable<List<Course>> getTopRatedCourses();
 
     @GET(Mapping.CATEGORY_COURSES)
-    Observable<List<FancyCourse>> getCoursesByCategory(@Query(Param.CATEGORY_ID) long categoryId);
+    Observable<List<Course>> getCoursesByCategory(@Query(Param.CATEGORY_ID) long categoryId);
 
     @GET(Mapping.CATEGORY_COURSES)
-    Observable<List<FancyCourse>> getCoursesByCategory(@Query(Param.CATEGORY) String category);
+    Observable<List<Course>> getCoursesByCategory(@Query(Param.CATEGORY) String category);
 
     @GET(Mapping.CATEGORIES)
     Observable<List<FancyCategory>> getCategories();
@@ -117,16 +117,16 @@ public interface RetrofitService {
 
 
     @GET(Mapping.STUDENT_COURSES)
-    Observable<List<FancyCourse>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<List<Course>> getStudentCourses(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.TEACHER_COURSES)
-    Observable<List<FancyCourse>> getTeacherCourses(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<List<Course>> getTeacherCourses(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.TEACHER_CLASSROOM)
-    Observable<List<FancyClassroom>> getTeacherClassrooms(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<List<Classroom>> getTeacherClassrooms(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.STUDENT_CLASSROOMS)
-    Observable<List<FancyClassroom>> getStudentClassrooms(@Query(Param.ACCESS_TOKEN) String token);
+    Observable<List<Classroom>> getStudentClassrooms(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.STUDENT_QUIZ_INFO)
     Observable<FancyQuiz> getQuiz(@Query(Param.ACCESS_TOKEN) String token,
