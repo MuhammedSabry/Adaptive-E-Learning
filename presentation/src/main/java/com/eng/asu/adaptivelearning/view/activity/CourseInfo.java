@@ -49,6 +49,7 @@ public class CourseInfo extends AppCompatActivity {
             courseCreatorName.setText(course.getPublisher().getFirstName() + " " + course.getPublisher().getLastName());
             courseCreatorEmail.setText(course.getPublisher().getEmail());
         }
+        courseContent.setText("");
         if (course.getSections() != null)
             for (int i = 0; i < course.getSections().size(); i++) {
                 courseContent.append(course.getSections().get(i).getTitle() + "\n");

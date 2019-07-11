@@ -7,11 +7,13 @@ import com.adaptivelearning.server.FancyModel.FancyStudentQuiz;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.adaptivelearning.server.constants.Mapping;
 import com.adaptivelearning.server.constants.Param;
+import com.eng.asu.adaptivelearning.domain.User;
 import com.eng.asu.adaptivelearning.domain.model.Classroom;
 import com.eng.asu.adaptivelearning.domain.model.Course;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.ResponseBody;
@@ -48,6 +50,12 @@ public interface RetrofitService {
     //User
     @GET(Mapping.PROFILE)
     Observable<FancyUser> getUserData(@Query(Param.ACCESS_TOKEN) String token);
+
+    @GET(Mapping.PROFILE)
+    Observable<User> getUserData2(@Query(Param.ACCESS_TOKEN) String token);
+
+    @GET("/all_courses")
+    Observable<List<Course>> getAllCourses();
 
     @DELETE(Mapping.SAVED_COURSES)
     Observable<Response<ResponseBody>> removeSavedCourse(@Query(Param.COURSE_ID) int courseId);
@@ -122,7 +130,7 @@ public interface RetrofitService {
     @GET(Mapping.TEACHER_COURSES)
     Observable<List<Course>> getTeacherCourses(@Query(Param.ACCESS_TOKEN) String token);
 
-    @GET(Mapping.TEACHER_CLASSROOM)
+    @GET(Mapping.TEACHER_CLASSROOMS)
     Observable<List<Classroom>> getTeacherClassrooms(@Query(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.STUDENT_CLASSROOMS)
@@ -145,6 +153,20 @@ public interface RetrofitService {
     @GET(Mapping.TEACHER_MEDIA)
     Observable<FancyMediaFile> getMedia(@Query(Param.ACCESS_TOKEN) String token,
                                         @Query(Param.FILE_ID) long mediaId);
+
+    @FormUrlEncoded
+    @POST(Mapping.JOIN_CHILD_IN_CLASSROOM)
+    Observable<Response<ResponseBody>> joinChildToClassroom(@Field(Param.ACCESS_TOKEN) String token,
+                                                            @Field(Param.FIRST_NAME)String firstName, @Field(Param.PASSCODE) String passcode);
+
+    @FormUrlEncoded
+    @POST(Mapping.ENROLL_CHILD_IN_COURSE)
+    Observable<Response<ResponseBody>> joinChildToCourse(@Field(Param.ACCESS_TOKEN) String token,
+                                                            @Field(Param.FIRST_NAME)String firstName, @Field(Param.COURSE_ID) String courseID);
+
+    @FormUrlEncoded
+    @POST(Mapping.REQUEST_TEACHING)
+    Completable sendTeachingRequest(@Field(Param.ACCESS_TOKEN) String token);
 
     @GET(Mapping.STUDENT_QUIZ_SCORE)
     Single<FancyStudentQuiz> getSubmittedQuiz(@Query(Param.ACCESS_TOKEN) String authToken,

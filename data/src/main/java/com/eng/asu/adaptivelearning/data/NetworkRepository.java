@@ -7,6 +7,7 @@ import com.adaptivelearning.server.FancyModel.FancyUser;
 import com.eng.asu.adaptivelearning.domain.ClassroomService;
 import com.eng.asu.adaptivelearning.domain.CourseService;
 import com.eng.asu.adaptivelearning.domain.StudentAnswer;
+import com.eng.asu.adaptivelearning.domain.User;
 import com.eng.asu.adaptivelearning.domain.UserService;
 import com.eng.asu.adaptivelearning.domain.UserStorage;
 import com.eng.asu.adaptivelearning.domain.model.Classroom;
@@ -45,7 +46,10 @@ public class NetworkRepository implements UserService,
     NetworkRepository(UserStorage userStorage) {
         this.authToken = userStorage.getAuthToken();
 
-        userStorage.setOnTokenChangeListener(token -> authToken = token);
+        userStorage.setOnTokenChangeListener(token -> {
+            if (token != null)
+                authToken = token;
+        });
 
         //Configuring the logcat to display request/response parameters
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -80,18 +84,26 @@ public class NetworkRepository implements UserService,
     @Override
     public Observable<String> loginWithEmail(String email, String password) {
         return serviceApi.loginByEmail(email, password)
-                .map(this::stringResponseMapper);
+                .map(this::stringResponseMapper)
+                .doOnNext(s -> this.authToken = s);
     }
 
     @Override
     public Observable<String> loginWithUserName(String userName, String password) {
         return serviceApi.loginByUsername(userName, password)
-                .map(this::stringResponseMapper);
+                .map(this::stringResponseMapper)
+                .doOnNext(s -> this.authToken = s);
+
     }
 
     @Override
     public Observable<FancyUser> getUserProfile() {
         return serviceApi.getUserData(authToken);
+    }
+
+    @Override
+    public Observable<User> getUserProfile2() {
+        return serviceApi.getUserData2(authToken);
     }
 
     @Override
@@ -146,6 +158,28 @@ public class NetworkRepository implements UserService,
     public Completable joinClassroom(String passcode) {
         return serviceApi.joinClassroom(authToken, passcode)
                 .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Completable joinChildToClassroom(String firstName, String passcode) {
+        return serviceApi.joinChildToClassroom(authToken, firstName, passcode)
+                .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Completable joinChildToCourse(String firstName, String courseID) {
+        return serviceApi.joinChildToCourse(authToken, firstName, courseID)
+                .flatMapCompletable(this::completableSourceMapper);
+    }
+
+    @Override
+    public Observable<List<Course>> getAllCourses() {
+        return serviceApi.getAllCourses();
+    }
+
+    @Override
+    public Completable sendTeachingRequest() {
+        return serviceApi.sendTeachingRequest(authToken);
     }
 
     @Override

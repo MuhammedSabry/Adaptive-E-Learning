@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/userPhoto"
         android:layout_marginTop="10dp"
-        android:textSize="16dp"
+        android:textSize="24dp"
         android:text="user name"/>
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_below="@id/userName"
         android:layout_marginTop="10dp"
         android:text="first name"
-        android:textSize="16dp" />
+        android:textSize="24dp" />
     <TextView
         android:id="@+id/lastName"
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         android:layout_below="@id/userName"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:textSize="16dp"
+        android:textSize="24dp"
         android:text="last name"/>
     <TextView
         android:id="@+id/email"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/firstName"
         android:layout_marginTop="10dp"
-        android:textSize="16dp"
+        android:textSize="24dp"
         android:text="email"/>
     <TextView
         android:id="@+id/gender"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/email"
         android:layout_marginTop="10dp"
-        android:textSize="16dp"
+        android:textSize="24dp"
         android:text="gender"/>
     <TextView
         android:id="@+id/dateOfBirth"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/gender"
         android:layout_marginTop="10dp"
-        android:textSize="16dp"
+        android:textSize="24dp"
         android:text="date of birth"/>
 
 </RelativeLayout>

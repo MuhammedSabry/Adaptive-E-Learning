@@ -11,12 +11,12 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 
-public class UserProfileInteractor extends SingleUseCase<FancyUser, Void> {
+public class UserProfileInteractor2 extends SingleUseCase<User, Void> {
 
     private UserService userService;
 
     @Inject
-    UserProfileInteractor(BackgroundExecutionThread backgroundExecutionThread,
+    UserProfileInteractor2(BackgroundExecutionThread backgroundExecutionThread,
                           PostExecutionThread postExecutionThread,
                           UserService userService) {
         super(backgroundExecutionThread, postExecutionThread);
@@ -24,7 +24,7 @@ public class UserProfileInteractor extends SingleUseCase<FancyUser, Void> {
     }
 
     @Override
-    protected Single<FancyUser> interact(Void param) {
-        return Single.fromObservable(userService.getUserProfile());
+    protected Single<User> interact(Void param) {
+        return Single.fromObservable(userService.getUserProfile2());
     }
 }

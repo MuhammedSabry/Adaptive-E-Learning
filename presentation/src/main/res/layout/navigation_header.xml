@@ -27,7 +27,7 @@
         android:id="@+id/viewProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Profile"
+        android:text="view profile"
         android:textSize="15sp"
         tools:text="View Profile"
         android:onClick="viewProfile"/>

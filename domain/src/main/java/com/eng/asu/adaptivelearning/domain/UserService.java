@@ -25,6 +25,8 @@ public interface UserService {
 
     Observable<FancyUser> getUserProfile();
 
+    Observable<User> getUserProfile2();
+
     Completable enrollInCourse(long courseId);
 
     Completable saveCourse(long courseId);
@@ -44,4 +46,12 @@ public interface UserService {
     Observable<List<Classroom>> getStudentClassrooms();
 
     Completable joinClassroom(String passcode);
+
+    Completable joinChildToClassroom(String firstName, String passcode);
+
+    Completable joinChildToCourse(String firstName, String courseTitle);
+
+    Observable<List<Course>> getAllCourses();
+
+    Completable sendTeachingRequest();
 }

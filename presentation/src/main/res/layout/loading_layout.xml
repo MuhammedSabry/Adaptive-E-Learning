@@ -11,7 +11,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:elevation="2dp"
+        android:elevation="8dp"
         android:layout_gravity="center"
         android:theme="@style/Base.Widget.AppCompat.ProgressBar"
         android:visibility="visible" />

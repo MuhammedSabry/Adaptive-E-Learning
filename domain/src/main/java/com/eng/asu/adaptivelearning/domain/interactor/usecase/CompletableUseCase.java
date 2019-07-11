@@ -14,7 +14,7 @@ public abstract class CompletableUseCase<Q> extends UseCase<Completable, Q> {
                 .observeOn(getPostExecutionThread());
     }
 
-    protected Completable execute() {
+    public Completable execute() {
         return execute(null);
     }
 

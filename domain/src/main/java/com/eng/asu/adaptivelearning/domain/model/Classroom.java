@@ -1,6 +1,5 @@
 package com.eng.asu.adaptivelearning.domain.model;
 
-import com.adaptivelearning.server.FancyModel.FancyCourse;
 import com.adaptivelearning.server.FancyModel.FancyMediaFile;
 import com.adaptivelearning.server.FancyModel.FancyUser;
 
@@ -13,7 +12,7 @@ public class Classroom {
     private String passCode;
     private int studentsNumber;
     private short coursesNumber;
-    private List<FancyCourse> courses;
+    private List<Course> courses;
     private FancyMediaFile classroom_picture;
 
     public Classroom() {
@@ -67,11 +66,11 @@ public class Classroom {
         this.coursesNumber = coursesNumber;
     }
 
-    public List<FancyCourse> getCourses() {
+    public List<Course> getCourses() {
         return this.courses;
     }
 
-    public void setCourses(List<FancyCourse> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 

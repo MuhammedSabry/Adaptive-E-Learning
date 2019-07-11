@@ -40,6 +40,8 @@ public class TeacherDashboardViewModel extends ViewModel {
     public LiveData<List<Classroom>> getTeacherClassrooms() {
         return LiveDataReactiveStreams.fromPublisher(
                 Flowable.interval(10, TimeUnit.SECONDS)
-                        .flatMap(aLong -> getTeacherClassrooms.execute()));
+                        .flatMap(aLong -> getTeacherClassrooms.execute())
+                        .distinctUntilChanged()
+                        .onErrorReturnItem(Collections.emptyList()));
     }
 }
