@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Adaptive-E-Learning.iml" filepath="$PROJECT_DIR$/Adaptive-E-Learning.iml" />
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation project.iml" filepath="$PROJECT_DIR$/graduation project.iml" />
       <module fileurl="file://$PROJECT_DIR$/presentation/presentation.iml" filepath="$PROJECT_DIR$/presentation/presentation.iml" />
     </modules>
   </component>

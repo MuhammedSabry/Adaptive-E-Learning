@@ -144,10 +144,10 @@ public class CourseContentActivity extends AppCompatActivity implements Sections
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_WRITE_EXTERNAL_CODE) {
-            if ((grantResults.length > 0)) {
+            if ((grantResults.length > 0))
+                Toasty.success(this, "Permissions granted").show();
+            else
                 Toasty.info(this, "Permissions denied").show();
-            } else
-                Toasty.info(this, "Permissions granted").show();
         }
     }
 

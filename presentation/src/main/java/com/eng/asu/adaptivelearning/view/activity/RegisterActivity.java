@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.eng.asu.adaptivelearning.LearningApplication;
 import com.eng.asu.adaptivelearning.R;
 import com.eng.asu.adaptivelearning.databinding.ActivityRegisterBinding;
@@ -13,10 +18,6 @@ import com.eng.asu.adaptivelearning.model.form.RegisterForm;
 import com.eng.asu.adaptivelearning.util.InputTextUtils;
 import com.eng.asu.adaptivelearning.viewmodel.RegisterViewModel;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 import es.dmoral.toasty.Toasty;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterForm.Listener {
@@ -58,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterForm.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null && !extras.isEmpty()) {
-            boolean isForChild = extras.getBoolean(REGISTER_FOR_CHILD,false);
+            boolean isForChild = extras.getBoolean(REGISTER_FOR_CHILD, false);
             viewModel.setIsForChild(isForChild);
         }
     }
@@ -96,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterForm.
 
     public void onDatePicked() {
         int year = dialogBinding.datePicker.getYear();
-        int month = dialogBinding.datePicker.getMonth();
+        int month = dialogBinding.datePicker.getMonth() + 1;
         int day = dialogBinding.datePicker.getDayOfMonth();
 
         String currentMonth = (month < 10) ? ("0" + month) : String.valueOf(month);

@@ -87,7 +87,7 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
     @SuppressLint("SetTextI18n")
     private void initViews() {
         binding.submit.setEnabled(false);
-        binding.timer.setText("00:00:00");
+        binding.timer.setText("23:59:59");
 
         questionsAdapter = new QuestionsAdapter(this, Collections.emptyList());
         binding.questionList.setAdapter(questionsAdapter);
@@ -110,6 +110,12 @@ public class QuizActivity extends AppCompatActivity implements BaseListener {
     @Override
     public void onFallBack() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.onSubmitClicked();
+        super.onBackPressed();
     }
 
     public void onSubmitClicked() {

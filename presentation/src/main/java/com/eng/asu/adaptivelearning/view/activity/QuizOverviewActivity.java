@@ -66,7 +66,7 @@ public class QuizOverviewActivity extends AppCompatActivity {
         if (fancyStudentQuiz.getQuizId() == null)
             return;
         binding.attemptsCount.setText("Attempts: " + fancyStudentQuiz.getAttempts());
-        binding.bestMark.setText("Best mark: " + fancyStudentQuiz.getStudentMark() + "/" + fancyStudentQuiz.getTotalMark());
+        binding.bestMark.setText("Best mark: " + fancyStudentQuiz.getStudentBestMark() + "/" + fancyStudentQuiz.getRetrievedQuizTotalMark());
     }
 
     private void initViewModel() {
@@ -82,7 +82,6 @@ public class QuizOverviewActivity extends AppCompatActivity {
         binding.quizInstructions.setText(quiz.getInstructions());
         binding.time.setText(getString(R.string.quiz_time_in_minutes, quiz.getTime()));
         binding.title.setText(quiz.getTitle());
-        binding.totalMark.setText(getString(R.string.quiz_total_marks, quiz.getTotalMark()));
         binding.start.setOnClickListener(v -> this.onStartQuizClicked());
         if (quiz.getNo_of_questions() == 0)
             disableStart();

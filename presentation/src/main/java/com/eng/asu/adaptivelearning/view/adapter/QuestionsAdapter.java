@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.adaptivelearning.server.FancyModel.FancyAnswer;
 import com.adaptivelearning.server.FancyModel.FancyQuestion;
 import com.eng.asu.adaptivelearning.R;
@@ -18,8 +20,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import androidx.databinding.DataBindingUtil;
 
 public class QuestionsAdapter extends BaseExpandableListAdapter {
     private Context context;
@@ -120,21 +120,19 @@ public class QuestionsAdapter extends BaseExpandableListAdapter {
         checkedTextView.setText(childPosition + ". " + answer.getBody());
         checkedTextView.setOnClickListener(v -> this.onAnswerClicked(answer, checkedTextView, isMultipleChoice, groupPosition, childPosition));
 
-        if (!isMultipleChoice) {
-            if (selectedAnswers.get(groupPosition) == childPosition)
-                checkedTextView.setChecked(true);
-            else
-                checkedTextView.setChecked(false);
-        }
+        if (!isMultipleChoice)
+            checkedTextView.setChecked(selectedAnswers.get(groupPosition) == childPosition);
+        else
+            checkedTextView.setChecked(answersSet.get(groupPosition).contains(answer.getAnswerId()));
     }
 
     private void onAnswerClicked(FancyAnswer answer, CheckedTextView v, boolean isMultipleChoice, int groupPosition, int childPosition) {
         if (isMultipleChoice) {
             v.toggle();
             if (v.isChecked())
-                answersSet.get(groupPosition).remove(answer.getAnswerId());
-            else
                 answersSet.get(groupPosition).add(answer.getAnswerId());
+            else
+                answersSet.get(groupPosition).remove(answer.getAnswerId());
         } else {
             selectedAnswers.set(groupPosition, childPosition);
             v.setChecked(true);
